@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cube.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 09:39:37 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/02/17 11:53:08 by sueno-te         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <MLX42/MLX42.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,7 +12,7 @@
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 24
 
-// Minimap scale (each map cell becomes a MINIMAP_SCALE x MINIMAP_SCALE square)
+// Minimap scale: each map cell is drawn as a MINIMAP_SCALE x MINIMAP_SCALE block.
 #define MINIMAP_SCALE 4
 
 // --- World Map ---
@@ -65,6 +53,10 @@ double dirX = -1, dirY = 0;
 // Camera plane (perpendicular to direction). Determines FOV.
 double planeX = 0, planeY = 0.66;
 
+// Movement parameters.
+double moveSpeed = 0.05;   // Adjust as needed.
+double rotSpeed  = 0.03;   // Adjust as needed.
+
 // Global MLX42 objects.
 mlx_t *mlx;
 static mlx_image_t *img;
@@ -84,7 +76,6 @@ void draw_line(mlx_image_t *img, int x0, int y0, int x1, int y1, uint32_t color)
     int sy = (y0 < y1) ? 1 : -1;
     int err = dx + dy;
     int e2;
-
     while (true)
     {
         if (x0 >= 0 && x0 < (int)img->width && y0 >= 0 && y0 < (int)img->height)
@@ -108,18 +99,14 @@ void draw_line(mlx_image_t *img, int x0, int y0, int x1, int y1, uint32_t color)
 // --- Draw the minimap in the upper left corner.
 void draw_minimap(mlx_image_t *img)
 {
-    // Draw the map cells.
+    // Draw each cell.
     for (int my = 0; my < MAP_HEIGHT; my++)
     {
         for (int mx = 0; mx < MAP_WIDTH; mx++)
         {
-            uint32_t color;
-            if (worldMap[my][mx] > 0)
-                color = ft_pixel(0, 0, 0, 255);      // Wall: black.
-            else
-                color = ft_pixel(255, 255, 255, 255);  // Empty: white.
-
-            // Fill a rectangle of size MINIMAP_SCALE x MINIMAP_SCALE.
+            uint32_t color = (worldMap[my][mx] > 0) ?
+                ft_pixel(0, 0, 0, 255) : ft_pixel(255, 255, 255, 255);
+            // Fill a rectangle for the cell.
             for (int y = 0; y < MINIMAP_SCALE; y++)
             {
                 for (int x = 0; x < MINIMAP_SCALE; x++)
@@ -148,7 +135,6 @@ void draw_minimap(mlx_image_t *img)
     }
 
     // Draw the player's POV line on the minimap in blue.
-    // (We multiply the direction vector by a small factor to make the line visible.)
     int endX = playerMiniX + (int)(dirX * 8);
     int endY = playerMiniY + (int)(dirY * 8);
     draw_line(img, playerMiniX, playerMiniY, endX, endY, ft_pixel(0, 0, 255, 255));
@@ -157,9 +143,56 @@ void draw_minimap(mlx_image_t *img)
 // --- update_frame: Called every frame.
 void update_frame(void *param)
 {
-    (void)param; // Unused parameter
+    (void)param; // Unused
 
-    // Clear the image by filling it with black.
+    // --- Handle Movement Input ---
+    // (Using MLX42's key-checking functions.)
+    if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+        mlx_close_window(mlx);
+
+    // Move forward if W is pressed.
+    if (mlx_is_key_down(mlx, MLX_KEY_W))
+    {
+        double newX = posX + dirX * moveSpeed;
+        double newY = posY + dirY * moveSpeed;
+        // Only move if not colliding with a wall.
+        if (worldMap[(int)posY][(int)newX] == 0)
+            posX = newX;
+        if (worldMap[(int)newY][(int)posX] == 0)
+            posY = newY;
+    }
+    // Move backward if S is pressed.
+    if (mlx_is_key_down(mlx, MLX_KEY_S))
+    {
+        double newX = posX - dirX * moveSpeed;
+        double newY = posY - dirY * moveSpeed;
+        if (worldMap[(int)posY][(int)newX] == 0)
+            posX = newX;
+        if (worldMap[(int)newY][(int)posX] == 0)
+            posY = newY;
+    }
+    // Rotate left if A is pressed.
+    if (mlx_is_key_down(mlx, MLX_KEY_A))
+    {
+        double oldDirX = dirX;
+        dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
+        dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
+        double oldPlaneX = planeX;
+        planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
+        planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
+    }
+    // Rotate right if D is pressed.
+    if (mlx_is_key_down(mlx, MLX_KEY_D))
+    {
+        double oldDirX = dirX;
+        dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
+        dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
+        double oldPlaneX = planeX;
+        planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
+        planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
+    }
+
+    // --- Clear the image (fill with black) ---
     for (uint32_t x = 0; x < WIDTH; x++)
     {
         for (uint32_t y = 0; y < HEIGHT; y++)
@@ -168,7 +201,7 @@ void update_frame(void *param)
         }
     }
 
-    // --- Raycasting loop: Render the 3D view ---
+    // --- Raycasting Loop: Render the 3D view ---
     for (int x = 0; x < WIDTH; x++)
     {
         // Calculate ray position and direction.
@@ -210,8 +243,8 @@ void update_frame(void *param)
         }
 
         // Perform DDA.
-        int hit = 0; // was there a wall hit?
-        int side;    // was the wall vertical or horizontal?
+        int hit = 0;
+        int side;
         while (hit == 0)
         {
             if (sideDistX < sideDistY)
@@ -226,7 +259,6 @@ void update_frame(void *param)
                 mapY += stepY;
                 side = 1;
             }
-            // Check if ray has hit a wall.
             if (worldMap[mapY][mapX] > 0)
                 hit = 1;
         }
@@ -254,9 +286,8 @@ void update_frame(void *param)
         if (worldMap[mapY][mapX] == 1)
             color = 0xFF0000FF; // Red walls.
         else
-            color = 0x00FF00FF; // (Other wall types, if any.)
-
-        // Give y-sides a darker color.
+            color = 0x00FF00FF;
+        // Darken y-sides.
         if (side == 1)
             color = (color >> 1) & 0x7F7F7FFF;
 
@@ -274,7 +305,7 @@ void update_frame(void *param)
 int main(void)
 {
     // Initialize MLX42.
-    mlx = mlx_init(WIDTH, HEIGHT, "Raycaster with Minimap", true);
+    mlx = mlx_init(WIDTH, HEIGHT, "Raycaster with Minimap & Movement", true);
     if (!mlx)
     {
         puts("MLX init error");
@@ -290,7 +321,7 @@ int main(void)
     }
     mlx_image_to_window(mlx, img, 0, 0);
 
-    // Set our update_frame function as the loop hook.
+    // Set update_frame as the loop hook.
     mlx_loop_hook(mlx, update_frame, mlx);
 
     // Start the MLX42 loop.

@@ -12,52 +12,29 @@
 #define WIDTH 512
 #define HEIGHT 512
 
-// Map dimensions for raycasting (classic 24x24 map)
+// Map dimensions (24x24)
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 24
 
-// Minimap scale: each map cell becomes a MINIMAP_SCALE x MINIMAP_SCALE block.
+// Minimap scale: each map cell is drawn as a MINIMAP_SCALE x MINIMAP_SCALE block.
 #define MINIMAP_SCALE 4
 
 // Floor and ceiling colors (RGBA)
-#define CEILING_COLOR 0x87CEEBFF  // Sky Blue: (135,206,235,255)
-#define FLOOR_COLOR   0x006400FF  // Dark Green: (0,100,0,255)
+#define CEILING_COLOR 0x87CEEBFF  // Sky Blue (135,206,235,255)
+#define FLOOR_COLOR   0x006400FF  // Dark Green (0,100,0,255)
 
 //-------------------------------------------------------------------
-// World Map: 1 = wall, 0 = empty space.
-int worldMap[MAP_HEIGHT][MAP_WIDTH] =
-{
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
+// Global world map (filled via parse_map)
+// Allowed characters:
+//   '0' : empty space,
+//   '1' : wall,
+//   'N','S','E','W' : player spawn (and orientation)
+int worldMap[MAP_HEIGHT][MAP_WIDTH];
 
-//-------------------------------------------------------------------
 // Player state: position, direction, and camera plane.
-double posX = 10, posY = 20;
-double dirX = -1, dirY = 0;
-double planeX = 0, planeY = 0.66;
+double posX, posY;      // In map units (will be set by the map parser)
+double dirX, dirY;      // Player's direction vector
+double planeX, planeY;  // Camera plane (perpendicular to direction)
 
 // Movement parameters.
 double moveSpeed = 0.05;  // Movement speed
@@ -66,6 +43,115 @@ double rotSpeed  = 0.03;  // Rotation speed
 // Global MLX42 objects.
 mlx_t *mlx;
 static mlx_image_t *img;
+
+//===================================================================
+// Map Parsing
+//===================================================================
+
+// Define your map as an array of strings (each string must have MAP_WIDTH characters).
+const char *mapData[MAP_HEIGHT] = {
+    "111111111111111111111111",
+    "1E0000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "100000000000000000000001",
+    "111111111111111111111111"
+};
+
+// Parses the map and fills the global worldMap array.
+// Also, sets the player's starting position and orientation based on the spawn character.
+// If a spawn character ('N','S','E','W') is encountered, that cell is set to '0' (floor).
+void parse_map(void)
+{
+    int playerFound = 0;
+
+    for (int i = 0; i < MAP_HEIGHT; i++)
+    {
+        for (int j = 0; j < MAP_WIDTH; j++)
+        {
+            char ch = mapData[i][j];
+
+            // If the character is a digit ('0'-'9'):
+            if (ch >= '0' && ch <= '9')
+            {
+                worldMap[i][j] = ch - '0';
+            }
+            // If the character indicates a spawn position.
+            else if (ch == 'N' || ch == 'S' || ch == 'E' || ch == 'W')
+            {
+                // Set the player's position to the center of this cell.
+                posX = j + 0.5;
+                posY = i + 0.5;
+
+                // Set the player's orientation based on the spawn character.
+                if (ch == 'N')
+                {
+                    // Facing north (upward on the screen; negative Y direction)
+                    dirX = 0;
+                    dirY = -1;
+                    // The camera plane is perpendicular to the direction.
+                    planeX = 0.66;
+                    planeY = 0;
+                }
+                else if (ch == 'S')
+                {
+                    // Facing south (downward on the screen)
+                    dirX = 0;
+                    dirY = 1;
+                    planeX = -0.66;
+                    planeY = 0;
+                }
+                else if (ch == 'E')
+                {
+                    // Facing east (to the right)
+                    dirX = 1;
+                    dirY = 0;
+                    planeX = 0;
+                    planeY = 0.66;
+                }
+                else if (ch == 'W')
+                {
+                    // Facing west (to the left)
+                    dirX = -1;
+                    dirY = 0;
+                    planeX = 0;
+                    planeY = -0.66;
+                }
+                // Replace spawn cell with floor (0) in the map.
+                worldMap[i][j] = 0;
+                playerFound++;
+            }
+            else
+            {
+                fprintf(stderr, "Error: Invalid map character '%c' at (%d, %d)\n", ch, i, j);
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+    if (playerFound != 1)
+    {
+        fprintf(stderr, "Error: Map must contain exactly one player spawn. Found %d\n", playerFound);
+        exit(EXIT_FAILURE);
+    }
+}
 
 //===================================================================
 // Utility Functions
@@ -113,7 +199,6 @@ void draw_line(mlx_image_t *img, int x0, int y0, int x1, int y1, uint32_t color)
 
 void process_input(void)
 {
-    // Quit if ESC is pressed.
     if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
         mlx_close_window(mlx);
 
@@ -169,7 +254,7 @@ void render_3d_view(mlx_image_t *img)
     for (int x = 0; x < WIDTH; x++)
     {
         // 1. Calculate ray position and direction.
-        double cameraX = 2 * x / (double)WIDTH - 1;  // x-coordinate in camera space.
+        double cameraX = 2 * x / (double)WIDTH - 1;
         double rayDirX = dirX + planeX * cameraX;
         double rayDirY = dirY + planeY * cameraX;
 
@@ -207,8 +292,8 @@ void render_3d_view(mlx_image_t *img)
         }
 
         // 5. Perform DDA.
-        int hit = 0;  // Has a wall been hit?
-        int side;     // 0 for an X-side, 1 for a Y-side.
+        int hit = 0;
+        int side;
         while (hit == 0)
         {
             if (sideDistX < sideDistY)
@@ -227,41 +312,33 @@ void render_3d_view(mlx_image_t *img)
                 hit = 1;
         }
 
-        // 6. Calculate distance to the wall (perpendicular distance).
-        double perpWallDist;
-        if (side == 0)
-            perpWallDist = sideDistX - deltaDistX;
-        else
-            perpWallDist = sideDistY - deltaDistY;
+        // 6. Calculate perpendicular wall distance.
+        double perpWallDist = (side == 0) ?
+            sideDistX - deltaDistX : sideDistY - deltaDistY;
 
-        // 7. Calculate height of the line to draw.
+        // 7. Calculate height of line to draw.
         int lineHeight = (int)(HEIGHT / perpWallDist);
 
-        // 8. Calculate lowest and highest pixel to fill for the current stripe.
+        // 8. Calculate lowest and highest pixel to fill.
         int drawStart = -lineHeight / 2 + HEIGHT / 2;
-        if (drawStart < 0)
-            drawStart = 0;
+        if (drawStart < 0) drawStart = 0;
         int drawEnd = lineHeight / 2 + HEIGHT / 2;
-        if (drawEnd >= HEIGHT)
-            drawEnd = HEIGHT - 1;
+        if (drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
 
         // 9. Choose wall color.
-        uint32_t wallColor;
-        if (worldMap[mapY][mapX] == 1)
-            wallColor = 0xFF0000FF;  // Red walls.
-        else
-            wallColor = 0x00FF00FF;  // Other types (if any).
+        uint32_t wallColor = (worldMap[mapY][mapX] == 1) ?
+            0xFF0000FF : 0x00FF00FF;
         if (side == 1)
-            wallColor = (wallColor >> 1) & 0x7F7F7FFF; // Darken for y-sides.
+            wallColor = (wallColor >> 1) & 0x7F7F7FFF;
 
-        // 10. Draw the column:
-        //    - Ceiling: from y = 0 to drawStart-1.
-        //    - Wall: from y = drawStart to drawEnd.
-        //    - Floor: from y = drawEnd+1 to HEIGHT-1.
+        // 10. Draw the vertical stripe:
+        //    Ceiling
         for (int y = 0; y < drawStart; y++)
             mlx_put_pixel(img, x, y, CEILING_COLOR);
+        //    Wall
         for (int y = drawStart; y <= drawEnd; y++)
             mlx_put_pixel(img, x, y, wallColor);
+        //    Floor
         for (int y = drawEnd + 1; y < HEIGHT; y++)
             mlx_put_pixel(img, x, y, FLOOR_COLOR);
     }
@@ -273,14 +350,12 @@ void render_3d_view(mlx_image_t *img)
 
 void render_minimap(mlx_image_t *img)
 {
-    // Draw each map cell on the minimap.
     for (int my = 0; my < MAP_HEIGHT; my++)
     {
         for (int mx = 0; mx < MAP_WIDTH; mx++)
         {
             uint32_t color = (worldMap[my][mx] > 0) ?
                 ft_pixel(0, 0, 0, 255) : ft_pixel(255, 255, 255, 255);
-            // Fill a rectangle for this cell.
             for (int y = 0; y < MINIMAP_SCALE; y++)
             {
                 for (int x = 0; x < MINIMAP_SCALE; x++)
@@ -294,7 +369,7 @@ void render_minimap(mlx_image_t *img)
         }
     }
 
-    // Draw the player on the minimap as a small red square.
+    // Draw the player as a small red square.
     int playerMiniX = (int)(posX * MINIMAP_SCALE);
     int playerMiniY = (int)(posY * MINIMAP_SCALE);
     for (int dy = -1; dy <= 1; dy++)
@@ -320,15 +395,10 @@ void render_minimap(mlx_image_t *img)
 
 void update_frame(void *param)
 {
-    (void)param; // Unused parameter
+    (void)param;
 
-    // Process player input.
     process_input();
-
-    // Render the 3D raycasting view.
     render_3d_view(img);
-
-    // Overlay the minimap in the top-left corner.
     render_minimap(img);
 }
 
@@ -338,15 +408,17 @@ void update_frame(void *param)
 
 int main(void)
 {
+    // First, parse the map to fill worldMap and set player spawn.
+    parse_map();
+
     // Initialize MLX42.
-    mlx = mlx_init(WIDTH, HEIGHT, "Raycaster with Minimap, Movement & Floor/Ceiling", true);
+    mlx = mlx_init(WIDTH, HEIGHT, "Raycaster with Map Parser", true);
     if (!mlx)
     {
         puts("MLX init error");
         return EXIT_FAILURE;
     }
 
-    // Create the image that will hold our rendered frame.
     img = mlx_new_image(mlx, WIDTH, HEIGHT);
     if (!img)
     {
@@ -355,10 +427,7 @@ int main(void)
     }
     mlx_image_to_window(mlx, img, 0, 0);
 
-    // Set update_frame as the loop hook.
     mlx_loop_hook(mlx, update_frame, mlx);
-
-    // Start the MLX42 loop.
     mlx_loop(mlx);
     mlx_terminate(mlx);
     return EXIT_SUCCESS;

@@ -43,7 +43,7 @@ int worldMap[MAP_HEIGHT][MAP_WIDTH] =
 };
 
 // Player starting position and direction
-double posX = 22, posY = 12;       // Player's position in map units
+double posX = 10, posY = 20;       // Player's position in map units
 double dirX = -1, dirY = 0;         // Initial direction vector (normalized)
 double planeX = 0, planeY = 0.66;    // Camera plane (perpendicular to dir); FOV = 2*atan(0.66)=66°
 
@@ -165,6 +165,7 @@ void update_frame(void *param)
             color = (color >> 1) & 0x7F7F7FFF;
         }
 
+        // --- Step 9: Draw the vertical stripe ---
         for (int y = drawStart; y <= drawEnd; y++)
         {
             mlx_put_pixel(img, x, y, color);
@@ -174,6 +175,7 @@ void update_frame(void *param)
 
 int main(void)
 {
+    // Initialize MLX42.
     mlx = mlx_init(WIDTH, HEIGHT, "Raycaster", true);
     if (!mlx)
     {
@@ -181,17 +183,20 @@ int main(void)
         return EXIT_FAILURE;
     }
 
+    // Create an image for our 3D view.
     img = mlx_new_image(mlx, WIDTH, HEIGHT);
     if (!img)
     {
         mlx_close_window(mlx);
         return EXIT_FAILURE;
     }
-
+    // Add the image to the window.
     mlx_image_to_window(mlx, img, 0, 0);
 
+    // Set the loop hook to our update_frame function.
     mlx_loop_hook(mlx, update_frame, mlx);
 
+    // Start the MLX42 loop.
     mlx_loop(mlx);
     mlx_terminate(mlx);
     return EXIT_SUCCESS;

@@ -1,138 +1,197 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   raycaster.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 09:39:37 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/02/17 09:50:48 by sueno-te         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+// raycaster.c
 #include <MLX42/MLX42.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define WIDTH       512
-#define HEIGHT      512
-#define MAP_WIDTH   5
-#define MAP_HEIGHT  5
+// Screen dimensions
+#define WIDTH 512
+#define HEIGHT 512
 
-// 1 = wall (black), 0 = floor (white)
-static int world_map[MAP_WIDTH * MAP_HEIGHT] = {
-    1,1,1,1,1,
-    1,0,0,0,1,
-    1,0,1,0,1,
-    1,0,0,0,1,
-    1,1,1,1,1,
+// Map dimensions
+#define MAP_WIDTH 24
+#define MAP_HEIGHT 24
+
+// The world map: 1 represents a wall, 0 is empty space.
+// (This is the classic map used in many raycasting tutorials.)
+int worldMap[MAP_HEIGHT][MAP_WIDTH] =
+{
+    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-static mlx_image_t* map_img;
-static mlx_image_t* player_img;
+// Player starting position and direction
+double posX = 22, posY = 12;       // Player's position in map units
+double dirX = -1, dirY = 0;         // Initial direction vector (normalized)
+double planeX = 0, planeY = 0.66;    // Camera plane (perpendicular to dir); FOV = 2*atan(0.66)=66°
 
-// Helper to pack an RGBA color
-static inline uint32_t ft_pixel(int r, int g, int b, int a)
+// Global MLX42 objects
+mlx_t *mlx;
+static mlx_image_t *img;
+
+// The update_frame function is called every frame.
+void update_frame(void *param)
 {
-    return ((uint32_t)r << 24) | ((uint32_t)g << 16) | ((uint32_t)b << 8) | (uint32_t)a;
-}
+    (void)param; // Unused parameter
 
-// Draw the entire map onto map_img, filling up the window
-void draw_map(void)
-{
-    // Each cell is tile_size×tile_size
-    int tile_size = WIDTH / MAP_WIDTH;  // (512 / 5) = 102
-
-    for (int y = 0; y < MAP_HEIGHT; y++)
+    // Clear the image by filling it with black.
+    for (uint32_t x = 0; x < WIDTH; x++)
     {
-        for (int x = 0; x < MAP_WIDTH; x++)
+        for (uint32_t y = 0; y < HEIGHT; y++)
         {
-            // Decide color based on tile
-            int tile = world_map[y * MAP_WIDTH + x];
-            uint32_t color = (tile == 1)
-                ? ft_pixel(0, 0, 0, 255)         // black for wall
-                : ft_pixel(255, 255, 255, 255);  // white for floor
+            mlx_put_pixel(img, x, y, 0x000000FF);
+        }
+    }
 
-            // Fill a TILE_SIZE × TILE_SIZE square
-            for (int py = 0; py < tile_size; py++)
+    // Raycasting loop: for every vertical stripe (column) of the screen.
+    for (int x = 0; x < WIDTH; x++)
+    {
+        // --- Step 1: Calculate ray position and direction ---
+        // cameraX maps x-coordinate to range [-1, 1]:
+        double cameraX = 2 * x / (double)WIDTH - 1;
+        // The ray direction is the player's direction plus an offset from the camera plane.
+        double rayDirX = dirX + planeX * cameraX;
+        double rayDirY = dirY + planeY * cameraX;
+
+        // --- Step 2: Which map square are we in? ---
+        int mapX = (int)posX;
+        int mapY = (int)posY;
+
+        // --- Step 3: Calculate the distance to the next x and y side ---
+        // Delta distance: distance from one x-side to the next x-side (or y-side).
+        double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
+        double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
+
+        double sideDistX, sideDistY;
+        int stepX, stepY;
+
+        // --- Step 4: Calculate step and initial sideDist ---
+        if (rayDirX < 0)
+        {
+            stepX = -1;
+            sideDistX = (posX - mapX) * deltaDistX;
+        }
+        else
+        {
+            stepX = 1;
+            sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+        }
+        if (rayDirY < 0)
+        {
+            stepY = -1;
+            sideDistY = (posY - mapY) * deltaDistY;
+        }
+        else
+        {
+            stepY = 1;
+            sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+        }
+
+        // --- Step 5: Perform DDA (Digital Differential Analyzer) ---
+        int hit = 0;  // Was a wall hit?
+        int side;     // Was a NS or EW wall hit? (0 for x-side, 1 for y-side)
+        while (hit == 0)
+        {
+            // Jump to next map square, either in x or y direction.
+            if (sideDistX < sideDistY)
             {
-                for (int px = 0; px < tile_size; px++)
-                {
-                    int pixel_x = x * tile_size + px;
-                    int pixel_y = y * tile_size + py;
-                    if ((uint32_t)pixel_x < map_img->width && (uint32_t)pixel_y < map_img->height)
-                        mlx_put_pixel(map_img, pixel_x, pixel_y, color);
-                }
+                sideDistX += deltaDistX;
+                mapX += stepX;
+                side = 0;
             }
+            else
+            {
+                sideDistY += deltaDistY;
+                mapY += stepY;
+                side = 1;
+            }
+            // Check if ray has hit a wall (non-zero value in worldMap).
+            if (worldMap[mapY][mapX] > 0)
+                hit = 1;
+        }
+
+        // --- Step 6: Calculate distance to the wall ---
+        double perpWallDist;
+        if (side == 0)
+            perpWallDist = sideDistX - deltaDistX;
+        else
+            perpWallDist = sideDistY - deltaDistY;
+
+        // --- Step 7: Calculate height of line to draw on screen ---
+        int lineHeight = (int)(HEIGHT / perpWallDist);
+
+        // Calculate lowest and highest pixel to fill in the current stripe.
+        int drawStart = -lineHeight / 2 + HEIGHT / 2;
+        if (drawStart < 0)
+            drawStart = 0;
+        int drawEnd = lineHeight / 2 + HEIGHT / 2;
+        if (drawEnd >= HEIGHT)
+            drawEnd = HEIGHT - 1;
+
+        // --- Step 8: Choose wall color ---
+        // For now, color depends on the wall type.
+        uint32_t color;
+        if (worldMap[mapY][mapX] == 1)
+            color = 0xFF0000FF; // Red walls
+        else
+            color = 0x00FF00FF; // Green (if other types exist)
+
+        // Give y-sides a darker shade to add simple shading.
+        if (side == 1)
+        {
+            // A simple way to darken: shift right one bit.
+            color = (color >> 1) & 0x7F7F7FFF;
+        }
+
+        for (int y = drawStart; y <= drawEnd; y++)
+        {
+            mlx_put_pixel(img, x, y, color);
         }
     }
 }
 
-// Handle movement or close
-void handle_input(void* param)
-{
-    mlx_t* mlx = (mlx_t*)param;
-    if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-        mlx_close_window(mlx);
-
-    // Simple arrow key movement
-    if (mlx_is_key_down(mlx, MLX_KEY_UP))
-        player_img->instances[0].y -= 2;
-    if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-        player_img->instances[0].y += 2;
-    if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-        player_img->instances[0].x -= 2;
-    if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-        player_img->instances[0].x += 2;
-}
-
 int main(void)
 {
-    // 1) Create the main window (512×512)
-    mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Cub3D - Fullscreen Map", true);
+    mlx = mlx_init(WIDTH, HEIGHT, "Raycaster", true);
     if (!mlx)
     {
         puts("MLX init error");
         return EXIT_FAILURE;
     }
 
-    // 2) Create a map image sized exactly like the window
-    map_img = mlx_new_image(mlx, WIDTH, HEIGHT);
-    if (!map_img)
+    img = mlx_new_image(mlx, WIDTH, HEIGHT);
+    if (!img)
     {
-        puts("Error creating map image");
-        mlx_terminate(mlx);
+        mlx_close_window(mlx);
         return EXIT_FAILURE;
     }
 
-    // 3) Create a player image (16×16 red square)
-    player_img = mlx_new_image(mlx, 16, 16);
-    if (!player_img)
-    {
-        puts("Error creating player image");
-        mlx_terminate(mlx);
-        return EXIT_FAILURE;
-    }
-    // Fill the player image with red
-    for (uint32_t i = 0; i < player_img->width; i++)
-    {
-        for (uint32_t j = 0; j < player_img->height; j++)
-            mlx_put_pixel(player_img, i, j, ft_pixel(255, 0, 0, 255));
-    }
+    mlx_image_to_window(mlx, img, 0, 0);
 
-    // 4) Draw the map once so it covers the whole window
-    draw_map();
+    mlx_loop_hook(mlx, update_frame, mlx);
 
-    // 5) Add the images to the window
-    //    The map is the background, then the player on top
-    mlx_image_to_window(mlx, map_img, 0, 0);
-    // Place player in the center of the second cell
-    mlx_image_to_window(mlx, player_img, 102 + 8, 102 + 8);
-
-    // 6) Hook for user input (moving the player, closing the window)
-    mlx_loop_hook(mlx, handle_input, mlx);
-
-    // 7) Start the loop
     mlx_loop(mlx);
     mlx_terminate(mlx);
     return EXIT_SUCCESS;

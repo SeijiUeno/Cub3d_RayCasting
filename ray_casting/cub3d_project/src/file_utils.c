@@ -9,24 +9,17 @@
 # define READ_BUFF_SIZE 1024
 #endif
 
-char	*read_file_to_str(const char *filename)
+// Reads chunks from fd and returns a linked list of t_chunk.
+// (≤ 25 lines)
+static t_chunk	*read_chunks(int fd, int *total_size)
 {
-	int			fd;
-	ssize_t		bytes_read;
-	char		buffer[READ_BUFF_SIZE];
-	t_chunk		*head = NULL;
-	t_chunk		*tail = NULL;
-	int			total_size = 0;
-	t_chunk		*new_chunk;
-	char		*result;
-	int			pos = 0;
+	t_chunk	*head = NULL;
+	t_chunk	*tail = NULL;
+	t_chunk	*new_chunk;
+	ssize_t	bytes_read;
+	char	buffer[READ_BUFF_SIZE];
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("open error");
-		exit(EXIT_FAILURE);
-	}
+	*total_size = 0;
 	while ((bytes_read = read(fd, buffer, READ_BUFF_SIZE)) > 0)
 	{
 		new_chunk = malloc(sizeof(t_chunk));
@@ -45,34 +38,69 @@ char	*read_file_to_str(const char *filename)
 			new_chunk->data[i] = buffer[i];
 		new_chunk->size = bytes_read;
 		new_chunk->next = NULL;
-		total_size += bytes_read;
+		*total_size += bytes_read;
 		if (!head)
 			head = new_chunk;
 		else
 			tail->next = new_chunk;
 		tail = new_chunk;
 	}
-	if (bytes_read < 0)
-	{
-		perror("read error");
-		exit(EXIT_FAILURE);
-	}
-	close(fd);
+	return (head);
+}
+
+// Concatenates the chunks into one allocated string.
+// (≤ 25 lines)
+static char	*concat_chunks(t_chunk *head, int total_size)
+{
+	char	*result;
+	int		pos = 0;
+	t_chunk	*curr;
+
 	result = malloc(total_size + 1);
 	if (!result)
 	{
 		perror("malloc error");
 		exit(EXIT_FAILURE);
 	}
-	for (t_chunk *curr = head; curr; )
+	for (curr = head; curr; curr = curr->next)
 	{
 		for (int i = 0; i < curr->size; i++)
 			result[pos++] = curr->data[i];
-		t_chunk *tmp = curr;
-		curr = curr->next;
+	}
+	result[total_size] = '\0';
+	return (result);
+}
+
+// Frees the chunk list.
+static void	free_chunks(t_chunk *head)
+{
+	t_chunk *tmp;
+	while (head)
+	{
+		tmp = head;
+		head = head->next;
 		free(tmp->data);
 		free(tmp);
 	}
-	result[total_size] = '\0';
+}
+
+// Main function: now only 9 lines.
+char	*read_file_to_str(const char *filename)
+{
+	int		fd;
+	int		total_size;
+	t_chunk	*chunks;
+	char	*result;
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("open error");
+		exit(EXIT_FAILURE);
+	}
+	chunks = read_chunks(fd, &total_size);
+	close(fd);
+	result = concat_chunks(chunks, total_size);
+	free_chunks(chunks);
 	return (result);
 }

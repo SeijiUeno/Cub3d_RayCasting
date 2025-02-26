@@ -499,10 +499,10 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    texNorth = mlx_load_png(texNorthPath);
-    texSouth = mlx_load_png(texSouthPath);
-    texEast  = mlx_load_png(texEastPath);
-    texWest  = mlx_load_png(texWestPath);
+    texNorth = mlx_load_png("east.png");
+    texSouth = mlx_load_png("north.png");
+    texEast  = mlx_load_png("south.png");
+    texWest  = mlx_load_png("west.png");
     if (!texNorth || !texSouth || !texEast || !texWest) {
         fprintf(stderr, "Error: One or more textures failed to load.\n");
         return EXIT_FAILURE;

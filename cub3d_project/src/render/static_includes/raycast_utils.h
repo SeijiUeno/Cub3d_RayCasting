@@ -3,6 +3,14 @@
 
 # include "../../../includes/structures.h"
 
+#define RAY_INFINITY 1e30
+
+/* New structure for storing step information */
+typedef struct s_step_info {
+    int step;
+    double sideDist;
+} t_step_info;
+
 /* Initializes ray data for a given column */
 void init_ray_data(t_app *app, int x, t_ray_data *rd);
 

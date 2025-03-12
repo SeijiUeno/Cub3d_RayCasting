@@ -41,9 +41,15 @@ static void init_mlx_and_textures(t_app *app)
 */
 static void cleanup_app(t_app *app)
 {
+	int	i;
+
+	i = 0;
 	if (app->map.world) {
-		for (int i = 0; i < app->map.height; i++)
+		while (i < app->map.height)
+		{
 			free(app->map.world[i]);
+			i++;
+		}
 		free(app->map.world);
 	}
 	free(app->config.texNorthPath);

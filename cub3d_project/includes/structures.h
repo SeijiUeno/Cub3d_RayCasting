@@ -54,8 +54,8 @@ typedef struct s_ray_data {
 	int mapY;
 	double deltaDistX;
 	double deltaDistY;
-	double sideDistX;
-	double sideDistY;
+	double side_distX;
+	double side_distY;
 	int stepX;
 	int stepY;
 	int side;

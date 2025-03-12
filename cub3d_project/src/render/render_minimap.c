@@ -18,8 +18,8 @@ void	draw_map_cell(t_app *app, int mx, int my, uint32_t color)
 		{
 			px = mx * MINIMAP_SCALE + x;
 			py = my * MINIMAP_SCALE + y;
-			if (px >= 0 && px < (int)app->gfx.img->width &&
-				py >= 0 && py < (int)app->gfx.img->height)
+			if (px >= 0 && px < (int)app->gfx.img->width
+				&& py >= 0 && py < (int)app->gfx.img->height)
 				mlx_put_pixel(app->gfx.img, px, py, color);
 			x = x + 1;
 		}
@@ -88,7 +88,6 @@ void	draw_player_minimap(t_app *app)
 	draw_line(app->gfx.img, p0, p1, ft_pixel(0, 0, 255, 255));
 }
 
-/* render_minimap: Renders the map grid and the player's icon */
 void	render_minimap(t_app *app)
 {
 	draw_map_grid(app);

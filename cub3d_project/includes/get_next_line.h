@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:54:21 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 17:10:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:43:17 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define GET_NEXT_LINE_H
 
 # include "utils.h"
+# include <unistd.h>
+# include <sys/types.h>
+# include <stdlib.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:41:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 17:25:12 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:55:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static void	cleanup_app(t_app *app)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (app->map.world)
@@ -69,14 +69,14 @@ static void	init_mlx_and_textures(t_app *app)
 	mlx_image_to_window(app->gfx.mlx, app->gfx.img, 0, 0);
 }
 
-static void	init_app(t_app *app, char *filename)
+static void	init_app(t_app *app, t_cub *cube)
 {
 	app->player.moveSpeed = 0.05;
 	app->player.rotSpeed = 0.03;
 	app->config.floorColor = 0x006400FF;
 	app->config.ceilingColor = 0x87CEEBFF;
 	app->map.world = NULL;
-	parse_cub_file(app, filename);
+	parse_cub_data(app, cube);
 }
 
 static void	run_app(t_app *app)
@@ -99,7 +99,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	import(argc, argv, &cub.level);
-	init_app(&app, argv[1]);
+	init_app(&app, &cub);
 	run_app(&app);
 	return (EXIT_SUCCESS);
 }

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   get_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brmoretti <brmoretti@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 17:08:39 by bmoretti          #+#    #+#             */
-/*   Updated: 2024/03/15 19:48:30 by brmoretti        ###   ########.fr       */
+/*   Created: 2025/03/13 18:35:59 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 19:57:43 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "import.h"
 
-static int	line_break(t_import_elements *lvl_el, size_t *valid_lines)
+static int	line_break(t_import_elements *lvl_el, void)
 {
 	if (*lvl_el->line == '\n')
 	{
-		if (*valid_lines)
-			get_elements_error(lvl_el, "Map with blank row", 21);
-		free (lvl_el->line);
+		// if (*valid_lines)
+		// 	get_elements_error(lvl_el, "Map with blank row", 21);
+		// free (lvl_el->line);
 		lvl_el->line = get_next_line(lvl_el->fd);
 		return (1);
 	}
@@ -41,8 +41,10 @@ void	get_map(t_import_elements *lvl_el)
 	lvl_el->line = get_next_line(lvl_el->fd);
 	while (lvl_el->line)
 	{
-		if (line_break(lvl_el, &lvl_el->lvl->y_size))
+		if (line_break(lvl_el, &lvl_el->lvl->y_size)){
+			printf("FIRST IF IN GET_MAP LINE_BREAK \n");
 			continue ;
+		}
 		get_line_len(lvl_el->line, &len, &lvl_el->lvl->x_size);
 		if (len > MAX_COLS)
 			get_elements_error(lvl_el, "Map MAX_COLS exceeded", 23);

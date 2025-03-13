@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:51:17 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 15:54:54 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:53:27 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,4 @@ char	*prepend_prefix(const char *prefix, const char *s)
 	}
 	result[i + j] = '\0';
 	return (result);
-}
-
-/* Ensure that the texture path begins with "assets/textures/" */
-char	*ensure_texture_path(const char *s)
-{
-	const char	*prefix;
-	size_t		prefix_len;
-
-	prefix = "assets/textures/";
-	prefix_len = ft_strlen(prefix);
-	if (ft_strncmp(s, prefix, prefix_len) == 0)
-		return (ft_strdup(s));
-	return (prepend_prefix(prefix, s));
 }

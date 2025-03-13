@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 22:38:52 by brmoretti         #+#    #+#             */
-/*   Updated: 2025/03/13 17:38:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:25:50 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "../../includes/get_next_line.h"
-#include "../../includes/structures.h"
+# include "../../includes/structures.h"
 
 //CONSTANTS
 # define M_PI 3.14159265358979323846

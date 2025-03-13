@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:36:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:48:16 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:52:35 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ typedef struct s_config
 
 typedef struct s_map
 {
-	int	**world;
-	int	width;
-	int	height;
+	int		**world;
+	size_t	width;
+	size_t	height;
 }	t_map;
 
 typedef struct s_app

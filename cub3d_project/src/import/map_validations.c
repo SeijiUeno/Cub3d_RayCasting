@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brmoretti <brmoretti@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 18:48:25 by brmoretti         #+#    #+#             */
-/*   Updated: 2024/03/26 20:28:43 by brmoretti        ###   ########.fr       */
+/*   Created: 2025/03/13 18:36:12 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 18:36:13 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static void	check_wall(t_level *lvl, int start[2], int i_step, int j_step)
 		i += i_step;
 		j += j_step;
 	}
-	exit_error_message("🎵 We don't need no education...\n"
-		"🧱 Missing another brick in the wall", 33);
+	exit_error_message("error", 33);
 }
 
 static void	walls_around(t_level *lvl, int i, int j)

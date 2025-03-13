@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:05:15 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:48:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:27:38 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ double	dda(t_app *app, t_ray_data *rd)
 			rd->mapY += rd->stepY;
 			rd->side = 1;
 		}
-		if (rd->mapX < 0 || rd->mapX >= app->map.width
-			|| rd->mapY < 0 || rd->mapY >= app->map.height)
+		if (rd->mapX < 0 || rd->mapX >= (int)app->map.width
+			|| rd->mapY < 0 || rd->mapY >= (int)app->map.height)
 			return (HEIGHT);
 		if (app->map.world[rd->mapY][rd->mapX] > 0)
 			break ;

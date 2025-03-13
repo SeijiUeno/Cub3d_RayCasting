@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:05:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:48:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:27:49 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	draw_map_grid(t_app *app)
 	uint32_t	color;
 
 	my = 0;
-	while (my < app->map.height)
+	while (my < (int)app->map.height)
 	{
 		mx = 0;
-		while (mx < app->map.width)
+		while (mx < (int)app->map.width)
 		{
 			if (app->map.world[my][mx] > 0)
 				color = ft_pixel(0, 0, 0, 255);

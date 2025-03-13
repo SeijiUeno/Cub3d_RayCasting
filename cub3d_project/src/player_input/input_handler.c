@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:43:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:48:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:37:37 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,13 @@ static void	move_player(t_app *app, double mult)
 
 	move_x = app->player.dir_x * app->player.moveSpeed * mult;
 	move_y = app->player.dir_y * app->player.moveSpeed * mult;
-	new_x = app->player.pos_x
- + move_x;
+	new_x = app->player.pos_x + move_x;
 	new_y = app->player.pos_y + move_y;
 	if (new_x >= 0 && new_x < app->map.width
 		&& app->map.world[(int)app->player.pos_y][(int)new_x] == 0)
-		app->player.pos_x
- = new_x;
+		app->player.pos_x = new_x;
 	if (new_y >= 0 && new_y < app->map.height
-		&& app->map.world[(int)new_y][(int)app->player.pos_x
-] == 0)
+		&& app->map.world[(int)new_y][(int)app->player.pos_x] == 0)
 		app->player.pos_y = new_y;
 }
 

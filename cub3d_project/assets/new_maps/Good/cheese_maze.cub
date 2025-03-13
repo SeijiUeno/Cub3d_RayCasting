@@ -1,7 +1,7 @@
-NO north.png
-SO south.png
-WE west.png
-EA east.png
+NO ./assets/textures/north.png
+SO ./assets/textures/south.png
+WE ./assets/textures/west.png
+EA ./assets/textures/east.png
 
 F 164,169,20
 C 153,204,255

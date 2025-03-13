@@ -6,19 +6,19 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 18:35:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 19:57:43 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 20:45:06 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "import.h"
 
-static int	line_break(t_import_elements *lvl_el, void)
+static int	line_break(t_import_elements *lvl_el, size_t *valid_lines)
 {
 	if (*lvl_el->line == '\n')
 	{
-		// if (*valid_lines)
-		// 	get_elements_error(lvl_el, "Map with blank row", 21);
-		// free (lvl_el->line);
+		if (*valid_lines)
+			get_elements_error(lvl_el, "Map with blank row", 21);
+		free (lvl_el->line);
 		lvl_el->line = get_next_line(lvl_el->fd);
 		return (1);
 	}

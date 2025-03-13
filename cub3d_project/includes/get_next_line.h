@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:54:21 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 18:43:17 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 20:46:08 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
+
+typedef struct s_buffer
+{
+	char	buffer[BUFFER_SIZE + 1];
+	size_t	pos;
+	int		bslash;
+}	t_buffer;
+
 
 int		ft_isdigit(int c);
 int		ft_isspace(int c);

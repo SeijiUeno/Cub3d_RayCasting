@@ -3,7 +3,6 @@
 #include "../includes/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 /* process_texture:
    Processes a texture configuration line and stores the texture path.
@@ -186,10 +185,14 @@ static t_mapLine *build_map_list(t_app *app, const char *file_content,
 void parse_cub_file(t_app *app, const char *filename)
 {
 	char *file_content = read_file_to_str(filename);
-	int configCount = 0, mapStarted = 0, mapLineCount = 0;
+	int configCount = 0;
+	int mapStarted = 0;
+	int mapLineCount = 0;
 	t_mapLine *head = build_map_list(app, file_content,
 		&configCount, &mapStarted, &mapLineCount);
 	free(file_content);
+
+	printf("%i \n, %i \n", configCount, mapLineCount);
 	if (configCount < 6 || mapLineCount == 0)
 	{
 		printf("Incomplete configuration or no map data.\n");

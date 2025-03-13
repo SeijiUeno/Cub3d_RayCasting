@@ -52,8 +52,8 @@ void process_input(t_app *app)
 		move_player(app, 1.0);
 	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_S))
 		move_player(app, -1.0);
-	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_A))
-		rotate_player(app, app->player.rotSpeed);
 	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_D))
+		rotate_player(app, app->player.rotSpeed);
+	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_A))
 		rotate_player(app, -app->player.rotSpeed);
 }

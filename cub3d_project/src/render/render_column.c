@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:05:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:06:49 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:48:00 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x)
 
 	if (rd->side == 0)
 	{
-		if (rd->rayDirX < 0)
+		if (rd->raydir_x < 0)
 			info.texture = app->gfx.texEast;
 		else
 			info.texture = app->gfx.texWest;
 	}
 	else
 	{
-		if (rd->rayDirY < 0)
+		if (rd->raydir_y < 0)
 			info.texture = app->gfx.texSouth;
 		else
 			info.texture = app->gfx.texNorth;
@@ -36,8 +36,8 @@ t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x)
 	info.texWidth = info.texture->width;
 	info.texHeight = info.texture->height;
 	info.texX = (int)(wall_x * info.texWidth);
-	if ((rd->side == 0 && rd->rayDirX > 0)
-		|| (rd->side == 1 && rd->rayDirY < 0))
+	if ((rd->side == 0 && rd->raydir_x > 0)
+		|| (rd->side == 1 && rd->raydir_y < 0))
 		info.texX = info.texWidth - info.texX - 1;
 	return (info);
 }
@@ -64,15 +64,16 @@ static void	map_wall_texture_coordinates(t_app *app, t_ray_data rd,
 
 	if (rd.side == 0)
 	{
-		col_draw->wallX = app->player.posY + perp_wall_dist * rd.rayDirY;
+		col_draw->wallX = app->player.pos_y + perp_wall_dist * rd.raydir_y;
 	}
 	else
 	{
-		col_draw->wallX = app->player.posX + perp_wall_dist * rd.rayDirX;
+		col_draw->wallX = app->player.pos_x
+ + perp_wall_dist * rd.raydir_x;
 	}
 	col_draw->wallX = col_draw->wallX - floor(col_draw->wallX);
-	col_draw->rayDirX = rd.rayDirX;
-	col_draw->rayDirY = rd.rayDirY;
+	col_draw->raydir_x = rd.raydir_x;
+	col_draw->raydir_y = rd.raydir_y;
 	tex = select_tex_info(app, &rd, col_draw->wallX);
 	draw_full_column(app, col_draw, tex);
 }

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:43:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 15:43:27 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:48:00 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	rotate_player(t_app *app, double angle)
 
 	cos_a = cos(angle);
 	sin_a = sin(angle);
-	rotate_vector(&app->player.dirX, &app->player.dirY, cos_a, sin_a);
+	rotate_vector(&app->player.dir_x, &app->player.dir_y, cos_a, sin_a);
 	rotate_vector(&app->player.planeX, &app->player.planeY, cos_a, sin_a);
-	normalize_vector(&app->player.dirX, &app->player.dirY);
+	normalize_vector(&app->player.dir_x, &app->player.dir_y);
 	normalize_vector(&app->player.planeX, &app->player.planeY);
 	app->player.planeX *= 0.66;
 	app->player.planeY *= 0.66;
@@ -57,16 +57,19 @@ static void	move_player(t_app *app, double mult)
 	double	move_x;
 	double	move_y;
 
-	move_x = app->player.dirX * app->player.moveSpeed * mult;
-	move_y = app->player.dirY * app->player.moveSpeed * mult;
-	new_x = app->player.posX + move_x;
-	new_y = app->player.posY + move_y;
+	move_x = app->player.dir_x * app->player.moveSpeed * mult;
+	move_y = app->player.dir_y * app->player.moveSpeed * mult;
+	new_x = app->player.pos_x
+ + move_x;
+	new_y = app->player.pos_y + move_y;
 	if (new_x >= 0 && new_x < app->map.width
-		&& app->map.world[(int)app->player.posY][(int)new_x] == 0)
-		app->player.posX = new_x;
+		&& app->map.world[(int)app->player.pos_y][(int)new_x] == 0)
+		app->player.pos_x
+ = new_x;
 	if (new_y >= 0 && new_y < app->map.height
-		&& app->map.world[(int)new_y][(int)app->player.posX] == 0)
-		app->player.posY = new_y;
+		&& app->map.world[(int)new_y][(int)app->player.pos_x
+] == 0)
+		app->player.pos_y = new_y;
 }
 
 void	process_input(t_app *app)

@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:42:04 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 17:09:18 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/03/08 14:28:53 by bmoretti          #+#    #+#             */
+/*   Updated: 2025/03/13 16:42:32 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "import.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	import(int argc, char *argv[], t_level *lvl)
 {
-	unsigned int	i;
+	t_import_elements	lvl_el;
 
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-		i++;
-	i = write(fd, s, i);
-	(void)i;
-}
-
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	ft_putstr_fd(s, fd);
-	i = write(fd, "\n", 1);
-	(void)i;
+	lvl_el.fd = basic_validation(argc, argv);
+	lvl_el.lvl = lvl;
+	lvl_el.line = NULL;
+	get_elements(&lvl_el);
+	get_map(&lvl_el);
+	map_validation(lvl);
+	close(lvl_el.fd);
 }

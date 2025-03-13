@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:36:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:15:44 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:48:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 typedef struct s_player
 {
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
 	double	planeX;
 	double	planeY;
 	double	moveSpeed;

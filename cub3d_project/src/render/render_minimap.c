@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:05:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:07:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:48:00 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,12 @@ void	draw_player_minimap(t_app *app)
 	t_point	p0;
 	t_point	p1;
 
-	p0.x = (int)(app->player.posX * MINIMAP_SCALE);
-	p0.y = (int)(app->player.posY * MINIMAP_SCALE);
+	p0.x = (int)(app->player.pos_x
+ * MINIMAP_SCALE);
+	p0.y = (int)(app->player.pos_y * MINIMAP_SCALE);
 	draw_player_icon(app, p0.x, p0.y);
-	p1.x = p0.x + (int)(app->player.dirX * 8);
-	p1.y = p0.y + (int)(app->player.dirY * 8);
+	p1.x = p0.x + (int)(app->player.dir_x * 8);
+	p1.y = p0.y + (int)(app->player.dir_y * 8);
 	draw_line(app->gfx.img, p0, p1, ft_pixel(0, 0, 255, 255));
 }
 

@@ -128,15 +128,16 @@ static void fill_map(t_app *app, t_mapLine *head)
 				app->map.world[row][j] = c - '0';
 			else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 			{
-				app->player.posX = j + 0.5;
-				app->player.posY = row + 0.5;
-				if (c == 'N') { app->player.dirX = 0; app->player.dirY = -1;
+				app->player.pos_x
+ = j + 0.5;
+				app->player.pos_y = row + 0.5;
+				if (c == 'N') { app->player.dir_x = 0; app->player.dir_y = -1;
 					app->player.planeX = 0.66; app->player.planeY = 0; }
-				else if (c == 'S') { app->player.dirX = 0; app->player.dirY = 1;
+				else if (c == 'S') { app->player.dir_x = 0; app->player.dir_y = 1;
 					app->player.planeX = -0.66; app->player.planeY = 0; }
-				else if (c == 'E') { app->player.dirX = 1; app->player.dirY = 0;
+				else if (c == 'E') { app->player.dir_x = 1; app->player.dir_y = 0;
 					app->player.planeX = 0; app->player.planeY = 0.66; }
-				else if (c == 'W') { app->player.dirX = -1; app->player.dirY = 0;
+				else if (c == 'W') { app->player.dir_x = -1; app->player.dir_y = 0;
 					app->player.planeX = 0; app->player.planeY = -0.66; }
 				app->map.world[row][j] = 0;
 			}

@@ -6,13 +6,15 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:41:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:22:36 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:25:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/app.h"
 #include "../includes/parsing.h"
 #include "../includes/render.h"
+#include "import/cub3d.h"
+#include "import/import.h"
 
 static void	cleanup_app(t_app *app)
 {
@@ -89,12 +91,14 @@ static void	run_app(t_app *app)
 int	main(int argc, char **argv)
 {
 	t_app	app;
+	t_cub	cub;
 
 	if (argc != 2)
 	{
 		printf("Usage: %s file.cub\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
+	import(argc, argv, &cub.level);
 	init_app(&app, argv[1]);
 	run_app(&app);
 	return (EXIT_SUCCESS);

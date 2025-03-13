@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:40:39 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 15:40:41 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:13:39 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ char	*ft_strdup(const char *s);
 char	*ft_strndup(const char *s, size_t n);
 int		ft_atoi(const char *str);
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-
-/* New helper to ensure texture paths start with "assets/textures/" */
 char	*prepend_prefix(const char *prefix, const char *s);
 char	*ensure_texture_path(const char *s);
 

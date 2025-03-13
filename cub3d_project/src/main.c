@@ -6,14 +6,39 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:41:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:02:50 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:22:36 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/app.h"
 #include "../includes/parsing.h"
 #include "../includes/render.h"
-#include "../includes/input_handler.h"
+
+static void	cleanup_app(t_app *app)
+{
+	int	i;
+
+	i = 0;
+	if (app->map.world)
+	{
+		while (i < app->map.height)
+		{
+			if ((app->map.world)[i])
+				free(app->map.world[i]);
+			i++;
+		}
+		if (app->map.world)
+			free(app->map.world);
+	}
+	if (app->config.texNorthPath)
+		free(app->config.texNorthPath);
+	if (app->config.texSouthPath)
+		free(app->config.texSouthPath);
+	if (app->config.texEastPath)
+		free(app->config.texEastPath);
+	if (app->config.texWestPath)
+		free(app->config.texWestPath);
+}
 
 static void	init_mlx_and_textures(t_app *app)
 {
@@ -40,32 +65,6 @@ static void	init_mlx_and_textures(t_app *app)
 		exit(EXIT_FAILURE);
 	}
 	mlx_image_to_window(app->gfx.mlx, app->gfx.img, 0, 0);
-}
-
-static void	cleanup_app(t_app *app)
-{
-	int	i;
-
-	i = 0;
-	if (app->map.world)
-	{
-		while (i < app->map.height)
-		{
-			if ((app->map.world)[i])
-				free(app->map.world[i]);
-			i++;
-		}
-		if (app->map.world)
-			free(app->map.world);
-	}
-	if (app->config.texNorthPath)
-		free(app->config.texNorthPath);
-	if (app->config.texSouthPath)
-		free(app->config.texSouthPath);
-	if (app->config.texEastPath)
-		free(app->config.texEastPath);
-	if (app->config.texWestPath)
-		free(app->config.texWestPath);
 }
 
 static void	init_app(t_app *app, char *filename)

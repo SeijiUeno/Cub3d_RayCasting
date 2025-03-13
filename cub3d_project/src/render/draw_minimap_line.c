@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_minimap_line.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 16:05:27 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 16:05:42 by sueno-te         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/render.h"
 
 static void	init_line_params_arr(t_point p0, t_point p1, int params[5])
@@ -25,12 +37,6 @@ static void	init_line_params_arr(t_point p0, t_point p1, int params[5])
 	params[4] = params[0] - params[1];
 }
 
-/*
- * draw_line_loop: Uses the parameters stored in the array to run the
- * Bresenham loop and draw the line.
- * We pass only two parameters here: the image pointer and the line data array.
- */
-
 static void	draw_line_loop(mlx_image_t *img, t_point pts[2],
 	int params[5], uint32_t color)
 {
@@ -56,11 +62,6 @@ static void	draw_line_loop(mlx_image_t *img, t_point pts[2],
 		}
 	}
 }
-
-/*
- * draw_line: Main function that accepts 4 parameters.
- * It packs the needed variables into an array and invokes the loop.
- */
 
 void	draw_line(mlx_image_t *img, t_point p0, t_point p1, uint32_t color)
 {

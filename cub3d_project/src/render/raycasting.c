@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 16:05:15 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 16:06:27 by sueno-te         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/render.h"
 #include "static_includes/raycast_utils.h"
 #include <math.h>
@@ -50,11 +62,6 @@ void	init_ray_data(t_app *app, int x, t_ray_data *rd)
 	rd->stepY = info_y.step;
 	rd->side_distY = info_y.side_dist;
 }
-
-/* dda: Runs the DDA loop until a wall is hit.
-   Parameters: (t_app *app, t_ray_data *rd)
-   Returns the perpendicular wall distance.
-*/
 
 double	dda(t_app *app, t_ray_data *rd)
 {

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:36:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 15:46:34 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:15:44 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,40 +62,5 @@ typedef struct s_app
 	t_config	config;
 	t_map	map;
 }	t_app;
-
-/* New structures for raycasting */
-typedef struct s_ray_data
-{
-	double	rayDirX;
-	double	rayDirY;
-	int	mapX;
-	int	mapY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	side_distX;
-	double	side_distY;
-	int	stepX;
-	int	stepY;
-	int	side;
-}	t_ray_data;
-
-typedef struct s_tex_info
-{
-	int				texX;
-	int				texWidth;
-	int				texHeight;
-	mlx_texture_t	*texture;
-}	t_tex_info;
-
-typedef struct s_column_draw {
-	int		x;
-	int		drawStart;
-	int		drawEnd;
-	int		lineHeight;
-	int		side;
-	double	rayDirX;
-	double	rayDirY;
-	double	wallX;
-}	t_column_draw;
 
 #endif

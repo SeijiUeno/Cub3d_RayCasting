@@ -1,9 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycast_utils.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 16:05:30 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 16:20:48 by sueno-te         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RAYCAST_UTILS_H
 # define RAYCAST_UTILS_H
 
 # include "../../../includes/structures.h"
+# include "../../../includes/raycasting.h"
 
 # define RAY_INFINITY 1e30
+
+typedef struct s_tex_info
+{
+	int				texX;
+	int				texWidth;
+	int				texHeight;
+	mlx_texture_t	*texture;
+}	t_tex_info;
 
 typedef struct s_step_info
 {
@@ -25,7 +46,6 @@ typedef struct s_vertical_segment
 	uint32_t	color;
 }	t_vertical_segment;
 
-/* Initializes ray data for a given column */
 void		draw_full_column(t_app *app, t_column_draw *col_draw,
 				t_tex_info tex);
 void		draw_wall(t_app *app, int x, t_column_draw *cd, t_tex_info tex);

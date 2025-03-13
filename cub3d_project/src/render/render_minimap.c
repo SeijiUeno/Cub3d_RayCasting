@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_minimap.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 16:05:07 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 16:07:00 by sueno-te         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/render.h"
 #include "../../includes/utils.h"
 #include "static_includes/raycast_utils.h"
 
-/* draw_map_cell: Draws one map cell at (mx, my) */
 void	draw_map_cell(t_app *app, int mx, int my, uint32_t color)
 {
 	int	y;
@@ -27,7 +38,6 @@ void	draw_map_cell(t_app *app, int mx, int my, uint32_t color)
 	}
 }
 
-/* draw_map_grid: Iterates over the map and draws each cell */
 void	draw_map_grid(t_app *app)
 {
 	int			my;

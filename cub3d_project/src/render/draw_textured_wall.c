@@ -1,14 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_textured_wall.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 16:05:22 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 16:05:56 by sueno-te         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/render.h"
 #include "static_includes/raycast_utils.h"
 #include <stdlib.h>
 #include <math.h>
 
-/*
-Converts a 32-bit pixel from ABGR format
-to RGBA format (as used in our rendering)
-In ABGR the bytes are: [A][B][G][R]
-while in RGBA they should be: [R][G][B][A]
-*/
 static uint32_t	convert_texture_color(uint32_t color)
 {
 	uint32_t	alpha;
@@ -23,11 +29,6 @@ static uint32_t	convert_texture_color(uint32_t color)
 	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
 }
 
-/*
-get_tex_color:
-Retrieves the texture color at the given vertical texture coordinate (tex_y)
-and converts it to the proper format.
-*/
 static	uint32_t	get_tex_color(const t_tex_info tex, int tex_y)
 {
 	uint32_t	*pixels;
@@ -37,15 +38,6 @@ static	uint32_t	get_tex_color(const t_tex_info tex, int tex_y)
 	texture_color = pixels[tex_y * tex.texWidth + tex.texX];
 	return (convert_texture_color(texture_color));
 }
-
-/*
-compute_wall_pixel_color:
-Computes the wall slice pixel color at screen coordinate y,
-by determining the corresponding texture coordinate.
-	d = y * 256 - screenHeight * 128 + lineHeight * 128;
-	tex_y = ((d * tex.texHeight) / lineHeight) / 256;
-It then returns the texture color at that tex_y.
-*/
 
 static uint32_t	compute_wall_pixel_color(const t_tex_info tex, int lineHeight,
 	int y, int screenHeight)
@@ -62,9 +54,6 @@ static uint32_t	compute_wall_pixel_color(const t_tex_info tex, int lineHeight,
 	return (get_tex_color(tex, tex_y));
 }
 
-/*
-Draws the wall slice for a given column (x) in the 3D view.
-*/
 void	draw_wall(t_app *app, int x, t_column_draw *cd, t_tex_info tex)
 {
 	int			y;

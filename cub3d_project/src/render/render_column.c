@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_column.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 16:05:10 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 16:06:49 by sueno-te         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/render.h"
 #include "static_includes/raycast_utils.h"
 #include <math.h>
@@ -30,12 +42,6 @@ t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x)
 	return (info);
 }
 
-/*
-** Pure function that calculates the vertical limits for a wall slice.
-** It computes the lineHeight as HEIGHT / perpWallDist, and then gives
-** the starting and ending y coordinates (clamped appropriately).
-*/
-
 static void	compute_wall_slice_limits(t_column_draw *col_draw,
 	double perp_wall_dist)
 {
@@ -51,11 +57,6 @@ static void	compute_wall_slice_limits(t_column_draw *col_draw,
 		col_draw->drawEnd = HEIGHT - 1;
 }
 
-/*
-Based on the computed ray data, determine the x-coordinate
-(wallHitX) where the ray intersects the wall, normalize it for texture mapping,
-then select the correct texture and draw the full column.
-*/
 static void	map_wall_texture_coordinates(t_app *app, t_ray_data rd,
 	t_column_draw *col_draw, double perp_wall_dist)
 {
@@ -76,13 +77,6 @@ static void	map_wall_texture_coordinates(t_app *app, t_ray_data rd,
 	draw_full_column(app, col_draw, tex);
 }
 
-/*
-For the given screen x coordinate:
-- Initialize ray data and calculate the perpendicular wall distance.
-- Compute the vertical slice limits using compute_wall_slice_limits.
-- Set the column index and side.
-- Map the wall intersection to texture coordinates and draw the column.
-*/
 void	render_column(t_app *app, int x)
 {
 	t_ray_data		d;

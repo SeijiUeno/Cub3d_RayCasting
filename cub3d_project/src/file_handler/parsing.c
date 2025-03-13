@@ -1,6 +1,6 @@
-#include "../includes/parsing.h"
-#include "../includes/file_utils.h"
-#include "../includes/utils.h"
+#include "../../includes/parsing.h"
+#include "../../includes/file_utils.h"
+#include "../../includes/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

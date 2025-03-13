@@ -1,5 +1,17 @@
-#include "../includes/file_utils.h"
-#include "../includes/structures.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/13 15:42:40 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 15:48:43 by sueno-te         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/file_utils.h"
+#include "../../includes/structures.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>

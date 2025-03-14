@@ -41,10 +41,8 @@ void	get_map(t_import_elements *lvl_el)
 	lvl_el->line = get_next_line(lvl_el->fd);
 	while (lvl_el->line)
 	{
-		if (line_break(lvl_el, &lvl_el->lvl->y_size)){
-			printf("FIRST IF IN GET_MAP LINE_BREAK \n");
+		if (line_break(lvl_el, &lvl_el->lvl->y_size))
 			continue ;
-		}
 		get_line_len(lvl_el->line, &len, &lvl_el->lvl->x_size);
 		if (len > MAX_COLS)
 			get_elements_error(lvl_el, "Map MAX_COLS exceeded", 23);

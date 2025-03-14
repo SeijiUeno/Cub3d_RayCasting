@@ -127,7 +127,7 @@ void parse_cub_data(t_app *app, t_cub *cube)
             }
             else
             {
-                fprintf(stderr, "Invalid map character '%c' at (%zu, %zu)\n", c, i, j);
+                fprintf(stderr, "Invalid map characterrrrr '%c' at (%zu, %zu)\n", c, i, j);
                 exit(EXIT_FAILURE);
             }
         }

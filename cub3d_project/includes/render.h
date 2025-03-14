@@ -16,8 +16,8 @@
 # include "app.h"
 # include "../src/render/static_includes/raycast_utils.h"
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 640
+# define HEIGHT 480
 # define CLEAR_COLOR 0x000000FF
 # define MINIMAP_SCALE 6
 

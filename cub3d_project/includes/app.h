@@ -18,4 +18,6 @@
 # include <stdlib.h>
 # include <math.h>
 
+void	cleanup_app(t_app *app);
+
 #endif

@@ -16,32 +16,6 @@
 #include "import/cub3d.h"
 #include "import/import.h"
 
-static void	cleanup_app(t_app *app)
-{
-	size_t	i;
-
-	i = 0;
-	if (app->map.world)
-	{
-		while (i < app->map.height)
-		{
-			if ((app->map.world)[i])
-				free(app->map.world[i]);
-			i++;
-		}
-		if (app->map.world)
-			free(app->map.world);
-	}
-	if (app->config.texNorthPath)
-		free(app->config.texNorthPath);
-	if (app->config.texSouthPath)
-		free(app->config.texSouthPath);
-	if (app->config.texEastPath)
-		free(app->config.texEastPath);
-	if (app->config.texWestPath)
-		free(app->config.texWestPath);
-}
-
 static void	init_mlx_and_textures(t_app *app)
 {
 	app->gfx.mlx = mlx_init(WIDTH, HEIGHT, "Raycaster", true);
@@ -98,6 +72,7 @@ int	main(int argc, char **argv)
 		printf("Usage: %s file.cub\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
+	memset(&cub, 0, sizeof(t_cub));
 	import(argc, argv, &cub.level);
 	init_app(&app, &cub);
 	run_app(&app);

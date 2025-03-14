@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/utils.h"
-#include "../includes/get_next_line.h"
-#include <stdlib.h>
+#include "../../includes/get_next_line.h"
 
 char	*ft_strdup(const char *s)
 {

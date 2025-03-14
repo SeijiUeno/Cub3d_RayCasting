@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:42:04 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 17:09:18 by sueno-te         ###   ########.fr       */
+/*   Created: 2025/03/13 18:42:32 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 18:50:51 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "../../includes/parsing.h"
+#include "helper/parser_helpers.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	parse_cub_data(t_app *app, t_cub *cube)
 {
-	unsigned int	i;
-
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-		i++;
-	i = write(fd, s, i);
-	(void)i;
-}
-
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	ft_putstr_fd(s, fd);
-	i = write(fd, "\n", 1);
-	(void)i;
+	parse_textures(app, cube);
+	parse_colors(app, cube);
+	allocate_map(app, cube);
+	fill_map(app, cube);
 }

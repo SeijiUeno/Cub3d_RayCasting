@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/13 15:42:04 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 17:09:18 by sueno-te         ###   ########.fr       */
+/*   Created: 2025/03/13 18:44:48 by sueno-te          #+#    #+#             */
+/*   Updated: 2025/03/13 18:50:51 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#ifndef PARSER_HELPERS_H
+# define PARSER_HELPERS_H
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	unsigned int	i;
+# include "../../import/cub3d.h"
 
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-		i++;
-	i = write(fd, s, i);
-	(void)i;
-}
+void	parse_textures(t_app *app, t_cub *cube);
+void	parse_colors(t_app *app, t_cub *cube);
+void	allocate_map(t_app *app, t_cub *cube);
+void	fill_map(t_app *app, t_cub *cube);
+void	set_player_direction(t_app *app, char c);
 
-void	ft_putendl_fd(char *s, int fd)
-{
-	int	i;
-
-	ft_putstr_fd(s, fd);
-	i = write(fd, "\n", 1);
-	(void)i;
-}
+#endif

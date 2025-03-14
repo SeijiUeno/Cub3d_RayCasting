@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:54:21 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 15:29:04 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:54:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@
 # include <errno.h>
 # include <fcntl.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+# ifndef BUFFER
+#  define BUFFER 1024
 # endif
 
-typedef struct s_buffer
+typedef struct s_bffer
 {
-	char	buffer[BUFFER_SIZE + 1];
+	char	bffer[BUFFER + 1];
 	size_t	pos;
 	int		bslash;
-}	t_buffer;
+}	t_bffer;
 
 void	*ft_memset(void *s, int c, size_t n);
 int		ft_isdigit(int c);

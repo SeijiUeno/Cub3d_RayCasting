@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:30:26 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 15:30:27 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:54:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,35 +46,35 @@ static char	*merge_n_right(char *left, char *right, size_t n_right)
 	return (merged);
 }
 
-static char	*ft_merge_till_bslash_n(char *line, t_buffer *buf)
+static char	*merge_slash(char *line, t_bffer *bf)
 {
 	size_t	i;
 	size_t	n_right;
 	char	*merged;
 
-	i = buf->pos;
-	while (buf->buffer[i] && buf->buffer[i] != '\n')
+	i = bf->pos;
+	while (bf->bffer[i] && bf->bffer[i] != '\n')
 		i++;
-	if (buf->buffer[i] == '\n')
+	if (bf->bffer[i] == '\n')
 	{
 		i++;
-		buf->bslash = 1;
+		bf->bslash = 1;
 	}
-	n_right = i - buf->pos;
-	merged = merge_n_right(line, &buf->buffer[buf->pos], n_right);
-	buf->pos = i;
+	n_right = i - bf->pos;
+	merged = merge_n_right(line, &bf->bffer[bf->pos], n_right);
+	bf->pos = i;
 	return (merged);
 }
 
-static char	*line_iterative(t_buffer *buf, int fd, char *line)
+static char	*iter_line(t_bffer *bf, int fd, char *line)
 {
 	ssize_t	read_size;
 
 	while (1)
 	{
-		if (!buf->pos)
+		if (!bf->pos)
 		{
-			read_size = read(fd, buf->buffer, BUFFER_SIZE);
+			read_size = read(fd, bf->bffer, BUFFER);
 			if (read_size == -1 || (!read_size && !*line))
 			{
 				free(line);
@@ -83,29 +83,29 @@ static char	*line_iterative(t_buffer *buf, int fd, char *line)
 			if (!read_size)
 				return (line);
 		}
-		line = ft_merge_till_bslash_n(line, buf);
-		if (!line || buf->bslash)
+		line = merge_slash(line, bf);
+		if (!line || bf->bslash)
 			return (line);
-		buf->pos = 0;
-		ft_bzero(buf->buffer, BUFFER_SIZE);
+		bf->pos = 0;
+		ft_bzero(bf->bffer, BUFFER);
 	}
 }
 
 char	*get_next_line(int fd)
 {
-	static t_buffer	*arr[1024];
+	static t_bffer	*arr[1024];
 	char			*line;
 
-	if (fd < 0 || BUFFER_SIZE < 1 || fd >= 1024)
+	if (fd < 0 || BUFFER < 1 || fd >= 1024)
 		return (NULL);
 	if (!arr[fd])
-		arr[fd] = ft_calloc(1, sizeof(t_buffer));
+		arr[fd] = ft_calloc(1, sizeof(t_bffer));
 	if (!arr[fd])
 		return (NULL);
 	arr[fd]->bslash = 0;
 	line = ft_calloc(1, sizeof(char));
 	if (line)
-		line = line_iterative(arr[fd], fd, line);
+		line = iter_line(arr[fd], fd, line);
 	if (!line)
 	{
 		free (arr[fd]);

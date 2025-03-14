@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:05:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:48:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:31:17 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x)
 		else
 			info.texture = app->gfx.tex_no;
 	}
-	info.texWidth = info.texture->width;
-	info.texHeight = info.texture->height;
-	info.texX = (int)(wall_x * info.texWidth);
+	info.text_wi = info.texture->width;
+	info.text_heig = info.texture->height;
+	info.tex_x = (int)(wall_x * info.text_wi);
 	if ((rd->side == 0 && rd->raydir_x > 0)
 		|| (rd->side == 1 && rd->raydir_y < 0))
-		info.texX = info.texWidth - info.texX - 1;
+		info.tex_x = info.text_wi - info.tex_x - 1;
 	return (info);
 }
 
@@ -45,7 +45,6 @@ static void	compute_wall_slice_limits(t_column_draw *col_draw,
 	col_draw->line_h = (int)(HEIGHT / perp_wall_dist);
 	if (col_draw->line_h <= 0)
 		col_draw->line_h = 1;
-
 	col_draw->draw_start = -col_draw->line_h / 2 + HEIGHT / 2;
 	if (col_draw->draw_start < 0)
 		col_draw->draw_start = 0;

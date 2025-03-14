@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:05:22 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:05:56 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:24:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static	uint32_t	get_tex_color(const t_tex_info tex, int tex_y)
 	uint32_t	texture_color;
 
 	pixels = (uint32_t *)tex.texture->pixels;
-	texture_color = pixels[tex_y * tex.texWidth + tex.texX];
+	texture_color = pixels[tex_y * tex.text_wi + tex.tex_x];
 	return (convert_texture_color(texture_color));
 }
 
@@ -43,11 +43,11 @@ static uint32_t	compute_wall_pixel_color(const t_tex_info tex, int line_h,
 	int		tex_y;
 
 	d = y * 256 - screenHeight * 128 + line_h * 128;
-	tex_y = ((d * tex.texHeight) / line_h) / 256;
+	tex_y = ((d * tex.text_heig) / line_h) / 256;
 	if (tex_y < 0)
 		tex_y = 0;
-	if (tex_y >= tex.texHeight)
-		tex_y = tex.texHeight - 1;
+	if (tex_y >= tex.text_heig)
+		tex_y = tex.text_heig - 1;
 	return (get_tex_color(tex, tex_y));
 }
 

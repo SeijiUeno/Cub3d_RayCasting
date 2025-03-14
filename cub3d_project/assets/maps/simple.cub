@@ -1,7 +1,7 @@
-NO north.png
-SO south.png
-WE west.png
-EA east.png
+NO cave_wall.png
+SO mossy.png
+WE mossy.png
+EA cave_wall.png
 
 F 100,100,100
 C 200,200,200

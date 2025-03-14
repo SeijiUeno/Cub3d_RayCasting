@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:54:21 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 20:46:08 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:29:04 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_buffer
 	size_t	pos;
 	int		bslash;
 }	t_buffer;
-
 
 void	*ft_memset(void *s, int c, size_t n);
 int		ft_isdigit(int c);

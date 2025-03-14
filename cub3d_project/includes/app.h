@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:40:24 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 16:55:34 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:42:04 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@
 # define ROW 100
 # define COL 80
 # define RAY_INFINITY 1e30
+# define RGB 3
+
+enum e_elements
+{
+	NO = 1,
+	SO = 2,
+	WE = 4,
+	EA = 8,
+	F = 16,
+	C = 32,
+	E_ALL = 63
+};
 
 typedef struct s_player
 {
@@ -99,17 +111,6 @@ typedef struct s_column_draw
 	double	wall_x;
 }	t_column_draw;
 
-enum e_elements
-{
-	NO = 1,
-	SO = 2,
-	WE = 4,
-	EA = 8,
-	F = 16,
-	C = 32,
-	E_ALL = 63
-};
-
 typedef struct s_cube
 {
 	char	map[ROW + 1][COL + 1];
@@ -119,8 +120,8 @@ typedef struct s_cube
 	char	we[COL + 1];
 	size_t	x_size;
 	size_t	y_size;
-	int		f[3];
-	int		c[3];
+	int		f[RGB];
+	int		c[RGB];
 }	t_cube;
 
 typedef struct s_file
@@ -135,26 +136,11 @@ typedef struct s_file_elem
 	t_cube	*src;
 }	t_file_elem;
 
-//hm
-typedef struct s_mapLine
-{
-	char				*line;
-	struct s_mapLine	*next;
-}	t_mapLine;
-
-typedef struct s_chunk
-{
-	char			*data;
-	int				size;
-	struct s_chunk	*next;
-}	t_chunk;
-// ok
-
 typedef struct s_tex_info
 {
-	int				texX;
-	int				texWidth;
-	int				texHeight;
+	int				tex_x;
+	int				text_wi;
+	int				text_heig;
 	mlx_texture_t	*texture;
 }	t_tex_info;
 
@@ -186,38 +172,38 @@ void		init_ray_data(t_app *app, int x, t_ray_data *rd);
 double		dda(t_app *app, t_ray_data *rd);
 t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x);
 
-void	clear_image(mlx_image_t *img, uint32_t color);
-void	draw_line(mlx_image_t *img, t_point p0, t_point p1, uint32_t color);
-void	render_3d_view(t_app *app);
-void	render_minimap(t_app *app);
-void	update_frame(void *param);
+void		clear_image(mlx_image_t *img, uint32_t color);
+void		draw_line(mlx_image_t *img, t_point p0, t_point p1, uint32_t color);
+void		render_3d_view(t_app *app);
+void		render_minimap(t_app *app);
+void		update_frame(void *param);
 
-void	parse_cub_data(t_app *app, t_file *cube);
+void		parse_cub_data(t_app *app, t_file *cube);
 
-void	process_input(t_app *app);
-void	rotate_player(t_app *app, double angle);
+void		process_input(t_app *app);
+void		rotate_player(t_app *app, double angle);
 
-void	cleanup_app(t_app *app);
-void	msg_error(const char *error_msg, const int error_code);
+void		cleanup_app(t_app *app);
+void		msg_error(const char *error_msg, const int error_code);
 
-int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-char	*prepend_prefix(const char *prefix, const char *s);
-char	*ensure_texture_path(const char *s);
+int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+char		*prepend_prefix(const char *prefix, const char *s);
+char		*ensure_texture_path(const char *s);
 
 void		convert(int argc, char *argv[], t_cube *src);
 int			ft_error(const char *error_msg);
-int		check_base(int argc, char *argv[]);
-void	error_msg_setter(t_file_elem *file_el,
-			const char *error_msg, const int error_code);
-void	set_map(t_file_elem *file_el);
-void	checker_map(t_cube *src);
-void	get_elements(t_file_elem *file_el);
-int		set_rgb(const char *str, int *dest);
+int			check_base(int argc, char *argv[]);
+void		error_msg_setter(t_file_elem *file_el,
+				const char *error_msg, const int error_code);
+void		set_map(t_file_elem *file_el);
+void		checker_map(t_cube *src);
+void		get_elements(t_file_elem *file_el);
+int			set_rgb(const char *str, int *dest);
 
-void	parse_textures(t_app *app, t_file *cube);
-void	parse_colors(t_app *app, t_file *cube);
-void	allocate_map(t_app *app, t_file *cube);
-void	fill_map(t_app *app, t_file *cube);
-void	set_player_direction(t_app *app, char c);
+void		set_player_direction(t_app *app, char c);
+void		parse_textures(t_app *app, t_file *cube);
+void		parse_colors(t_app *app, t_file *cube);
+void		allocate_map(t_app *app, t_file *cube);
+void		fill_map(t_app *app, t_file *cube);
 
 #endif

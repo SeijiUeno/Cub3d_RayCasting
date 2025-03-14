@@ -13,7 +13,7 @@
 #include "../../includes/parsing.h"
 #include "helper/parser_helpers.h"
 
-void	parse_cub_data(t_app *app, t_cub *cube)
+void	parse_cub_data(t_app *app, t_file *cube)
 {
 	parse_textures(app, cube);
 	parse_colors(app, cube);

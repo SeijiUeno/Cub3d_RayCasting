@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void	allocate_map(t_app *app, t_cub *cube)
+void	allocate_map(t_app *app, t_file *cube)
 {
 	size_t	i;
 

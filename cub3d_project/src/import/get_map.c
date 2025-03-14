@@ -44,10 +44,10 @@ void	get_map(t_import_elements *lvl_el)
 		if (line_break(lvl_el, &lvl_el->lvl->y_size))
 			continue ;
 		get_line_len(lvl_el->line, &len, &lvl_el->lvl->x_size);
-		if (len > MAX_COLS)
-			get_elements_error(lvl_el, "Map MAX_COLS exceeded", 23);
-		if (++(lvl_el->lvl->y_size) > MAX_ROWS)
-			get_elements_error(lvl_el, "Map MAX_ROWS exceeded", 22);
+		if (len > COL)
+			get_elements_error(lvl_el, "Map COL exceeded", 23);
+		if (++(lvl_el->lvl->y_size) > ROW)
+			get_elements_error(lvl_el, "Map ROW exceeded", 22);
 		ft_memcpy(lvl_el->lvl->map[lvl_el->lvl->y_size - 1], lvl_el->line, len);
 		free (lvl_el->line);
 		lvl_el->line = get_next_line(lvl_el->fd);

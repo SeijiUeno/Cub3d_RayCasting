@@ -42,7 +42,7 @@ static void	get_rgb(int dest[3], const char *str, t_import_elements *lvl_el)
 
 static void	copy_element(int index, t_import_elements *lvl_el, const char *str)
 {
-	t_level	*lvl;
+	t_cube	*lvl;
 
 	lvl = lvl_el->lvl;
 	if (index == NO)
@@ -95,8 +95,8 @@ void	get_elements(t_import_elements *lvl_el)
 		lvl_el->line = get_next_line(lvl_el->fd);
 		if (!lvl_el->line)
 			get_elements_error(lvl_el, "Missing elements", 4);
-		if (ft_strlen(lvl_el->line) > MAX_COLS)
-			get_elements_error(lvl_el, "MAX_COLS exceeded", 5);
+		if (ft_strlen(lvl_el->line) > COL)
+			get_elements_error(lvl_el, "COL exceeded", 5);
 		if (*lvl_el->line != '\n')
 			get_element(lvl_el, &gotten_elements);
 		free (lvl_el->line);

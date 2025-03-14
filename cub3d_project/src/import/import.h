@@ -32,7 +32,7 @@ typedef struct s_import_elements
 {
 	int		fd;
 	char	*line;
-	t_level	*lvl;
+	t_cube	*lvl;
 }	t_import_elements;
 
 int		basic_validation(int argc, char *argv[]);
@@ -45,6 +45,6 @@ void	get_elements(t_import_elements *lvl_el);
 int		fill_valid_rgb_number(const char *str, int *dest);
 
 void	get_map(t_import_elements *lvl_el);
-void	map_validation(t_level *lvl);
+void	map_validation(t_cube *lvl);
 
 #endif

@@ -23,28 +23,28 @@
 # include "../../includes/get_next_line.h"
 # include "../../includes/structures.h"
 
-# define MAX_ROWS 100
-# define MAX_COLS 80
+# define ROW 100
+# define COL 80
 
-typedef struct s_level
+typedef struct s_cube
 {
-	char	no[MAX_COLS + 1];
-	char	so[MAX_COLS + 1];
-	char	ea[MAX_COLS + 1];
-	char	we[MAX_COLS + 1];
+	char	no[COL + 1];
+	char	so[COL + 1];
+	char	ea[COL + 1];
+	char	we[COL + 1];
 	int		f[3];
 	int		c[3];
-	char	map[MAX_ROWS + 1][MAX_COLS + 1];
+	char	map[ROW + 1][COL + 1];
 	size_t	x_size;
 	size_t	y_size;
-}	t_level;
+}	t_cube;
 
-typedef struct s_cub
+typedef struct s_file
 {
-	t_level		level;
-}	t_cub;
+	t_cube		level;
+}	t_file;
 
-void		import(int argc, char *argv[], t_level *lvl);
+void		import(int argc, char *argv[], t_cube *lvl);
 int			error_message(const char *error_msg);
 
 #endif

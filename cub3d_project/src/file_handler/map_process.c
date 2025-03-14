@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static void	process_map_cell(t_app *app, t_cub *cube, size_t i, size_t j)
+static void	process_map_cell(t_app *app, t_file *cube, size_t i, size_t j)
 {
 	char	c;
 
@@ -40,7 +40,7 @@ static void	process_map_cell(t_app *app, t_cub *cube, size_t i, size_t j)
 	}
 }
 
-void	fill_map(t_app *app, t_cub *cube)
+void	fill_map(t_app *app, t_file *cube)
 {
 	size_t	i;
 	size_t	j;

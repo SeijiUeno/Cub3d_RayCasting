@@ -16,6 +16,6 @@
 # include "structures.h"
 # include "../src/import/cub3d.h"
 
-void parse_cub_data(t_app *app, t_cub *cube);
+void parse_cub_data(t_app *app, t_file *cube);
 
 #endif

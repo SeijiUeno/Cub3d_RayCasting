@@ -43,7 +43,7 @@ static void	init_mlx_and_textures(t_app *app)
 	mlx_image_to_window(app->gfx.mlx, app->gfx.img, 0, 0);
 }
 
-static void	init_app(t_app *app, t_cub *cube)
+static void	init_app(t_app *app, t_file *cube)
 {
 	app->player.moveSpeed = 0.05;
 	app->player.rotSpeed = 0.03;
@@ -65,14 +65,14 @@ static void	run_app(t_app *app)
 int	main(int argc, char **argv)
 {
 	t_app	app;
-	t_cub	cub;
+	t_file	cub;
 
 	if (argc != 2)
 	{
 		printf("Usage: %s file.cub\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
-	memset(&cub, 0, sizeof(t_cub));
+	memset(&cub, 0, sizeof(t_file));
 	import(argc, argv, &cub.level);
 	init_app(&app, &cub);
 	run_app(&app);

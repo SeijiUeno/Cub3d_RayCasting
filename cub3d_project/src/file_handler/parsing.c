@@ -18,7 +18,7 @@
 // #include <stdlib.h>
 // #include <math.h>
 
-// void parse_cub_data(t_app *app, t_cub *cube)
+// void parse_cub_data(t_app *app, t_file *cube)
 // {
 //     const char *prefix = "assets/textures/";
 

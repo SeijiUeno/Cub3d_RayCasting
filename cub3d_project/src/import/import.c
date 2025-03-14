@@ -12,7 +12,7 @@
 
 #include "import.h"
 
-void	import(int argc, char *argv[], t_level *lvl)
+void	import(int argc, char *argv[], t_cube *lvl)
 {
 	t_import_elements	lvl_el;
 

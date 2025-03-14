@@ -13,7 +13,7 @@
 #include "../../includes/parsing.h"
 #include "../import/cub3d.h"
 
-void	parse_colors(t_app *app, t_cub *cube)
+void	parse_colors(t_app *app, t_file *cube)
 {
 	app->config.floorColor = ft_pixel(cube->level.f[0],
 			cube->level.f[1], cube->level.f[2], 255);

@@ -12,7 +12,7 @@
 
 #include "import.h"
 
-static void	check_wall(t_level *lvl, int start[2], int i_step, int j_step)
+static void	check_wall(t_cube *lvl, int start[2], int i_step, int j_step)
 {
 	int	i;
 	int	j;
@@ -32,7 +32,7 @@ static void	check_wall(t_level *lvl, int start[2], int i_step, int j_step)
 	exit_error_message("error", 33);
 }
 
-static void	walls_around(t_level *lvl, int i, int j)
+static void	walls_around(t_cube *lvl, int i, int j)
 {
 	int	start[2];
 
@@ -60,7 +60,7 @@ static void	valid_char(const char c, int *count_player)
 		exit_error_message("Only one player allowed in the map", 30);
 }
 
-void	map_validation(t_level *lvl)
+void	map_validation(t_cube *lvl)
 {
 	int	i;
 	int	j;
@@ -68,10 +68,10 @@ void	map_validation(t_level *lvl)
 
 	count_player = 0;
 	i = -1;
-	while (++i < MAX_ROWS && lvl->map[i][0])
+	while (++i < ROW && lvl->map[i][0])
 	{
 		j = -1;
-		while (++j < MAX_COLS && lvl->map[i][j])
+		while (++j < COL && lvl->map[i][j])
 		{
 			valid_char(lvl->map[i][j], &count_player);
 			walls_around(lvl, i, j);

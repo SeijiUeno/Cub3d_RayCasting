@@ -22,7 +22,7 @@ static char	*get_tex_path(const char *prefix, const char *path)
 	return (prepend_prefix(prefix, path));
 }
 
-void	parse_textures(t_app *app, t_cub *cube)
+void	parse_textures(t_app *app, t_file *cube)
 {
 	const char	*prefix = "assets/textures/";
 

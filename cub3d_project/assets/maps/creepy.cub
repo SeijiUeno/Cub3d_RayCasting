@@ -1,15 +1,15 @@
-NO textures/simonkraft/soul_sand.xpm
-SO textures/simonkraft/soul_soil_01.xpm
-WE textures/simonkraft/soul_soil.xpm
-EA textures/simonkraft/soul_sand.xpm
+NO north.png
+SO south.png
+WE west.png
+EA east.png
 
-C 53,41,34
-F 45,33,27
+C 35,19,73
+F 15,6,40
 
 111111111111111
 111111000111111
 111110000011111
-1111000N0001111
+111100000001111
 111000000000111
 110000000000011
 100001111100001

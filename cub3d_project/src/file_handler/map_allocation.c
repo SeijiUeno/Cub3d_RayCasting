@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "helper/parser_helpers.h"
-#include "../convert/cub3d.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../includes/app.h"
 
 void	allocate_map(t_app *app, t_file *cube)
 {

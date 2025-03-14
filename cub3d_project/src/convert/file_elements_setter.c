@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "convert.h"
+#include "../../includes/app.h"
 
 static void	get_rgb(int dest[3], const char *str, t_file_elem *file_el)
 {

@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
-#include "static_includes/raycast_utils.h"
-#include <stdlib.h>
-#include <math.h>
+#include "../../includes/app.h"
 
 static uint32_t	convert_texture_color(uint32_t color)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "convert.h"
+#include "../../includes/app.h"
 
 void	convert(int argc, char *argv[], t_cube *src)
 {

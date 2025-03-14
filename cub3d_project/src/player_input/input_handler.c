@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/input_handler.h"
-#include <MLX42/MLX42.h>
-#include <math.h>
+#include "../../includes/app.h"
 
 static void	normalize_vector(double *x, double *y)
 {

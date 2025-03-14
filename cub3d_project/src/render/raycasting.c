@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
-#include "static_includes/raycast_utils.h"
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../includes/app.h"
 
 static t_step_info	compute_step_side(double pos, double rayDir,
 	int mapCoord, double deltaDist)

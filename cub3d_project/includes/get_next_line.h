@@ -13,15 +13,15 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include "utils.h"
-# include <unistd.h>
-# include <sys/types.h>
+# include <stdio.h>
 # include <stdlib.h>
+# include <math.h>
+# include <stdint.h>
+# include <stddef.h>
+# include <stdint.h>
+# include <unistd.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <math.h>
-# include <stdio.h>
-# include <string.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
@@ -34,6 +34,8 @@ typedef struct s_buffer
 	int		bslash;
 }	t_buffer;
 
+
+void	*ft_memset(void *s, int c, size_t n);
 int		ft_isdigit(int c);
 int		ft_isspace(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

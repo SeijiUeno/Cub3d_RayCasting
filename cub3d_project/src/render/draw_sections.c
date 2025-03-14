@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
-#include "static_includes/raycast_utils.h"
-#include <math.h>
-#include <stdlib.h>
+#include "../../includes/app.h"
 
 static t_vertical_segment	init_vertical_segment(int x, int start_y,
 	int end_y, uint32_t color)

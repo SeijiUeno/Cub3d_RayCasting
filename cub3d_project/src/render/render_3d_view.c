@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
-#include "static_includes/raycast_utils.h"
-
-#include <math.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../includes/app.h"
 
 void	render_3d_view(t_app *app)
 {

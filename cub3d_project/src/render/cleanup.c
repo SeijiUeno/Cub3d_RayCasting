@@ -1,6 +1,5 @@
 
-#include "../includes/render.h"
-#include "../includes/structures.h"
+#include "../../includes/app.h"
 
 static void	cleanup_textures(t_app *app)
 {

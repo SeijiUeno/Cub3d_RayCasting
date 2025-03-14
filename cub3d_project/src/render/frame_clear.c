@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
-#include "static_includes/raycast_utils.h"
-#include <stdlib.h>
+#include "../../includes/app.h"
 
 void	clear_image(mlx_image_t *img, uint32_t color)
 {

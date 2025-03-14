@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
-#include "static_includes/raycast_utils.h"
-#include <math.h>
-#include <stdlib.h>
+#include "../../includes/app.h"
 
 t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x)
 {

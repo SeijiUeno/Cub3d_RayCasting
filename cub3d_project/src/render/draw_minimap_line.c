@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
+#include "../../includes/app.h"
 
 static void	init_line_params_arr(t_point p0, t_point p1, int params[5])
 {

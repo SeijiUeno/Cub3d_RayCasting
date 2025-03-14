@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "convert.h"
+#include "../../includes/app.h"
 
 int	check_base(int argc, char *argv[])
 {
@@ -24,6 +24,6 @@ int	check_base(int argc, char *argv[])
 		msg_error("Expected a .cub file", 2);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		msg_error(strerror(errno), 3);
+		msg_error("ERROR", 3);
 	return (fd);
 }

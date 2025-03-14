@@ -11,10 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/app.h"
-#include "../includes/parsing.h"
-#include "../includes/render.h"
-#include "convert/cub3d.h"
-#include "convert/convert.h"
 
 static void	init_mlx_and_textures(t_app *app)
 {
@@ -72,7 +68,7 @@ int	main(int argc, char **argv)
 		printf("Usage: %s file.cub\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
-	memset(&cub, 0, sizeof(t_file));
+	ft_memset(&cub, 0, sizeof(t_file));
 	convert(argc, argv, &cub.level);
 	init_app(&app, &cub);
 	run_app(&app);

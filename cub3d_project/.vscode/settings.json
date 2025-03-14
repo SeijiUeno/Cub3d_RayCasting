@@ -5,6 +5,8 @@
         "render.h": "c",
         "cub3d.h": "c",
         "get_next_line.h": "c",
-        "convert.h": "c"
+        "convert.h": "c",
+        "app.h": "c",
+        "errno.h": "c"
     }
 }

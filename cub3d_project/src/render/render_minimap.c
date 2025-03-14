@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
-#include "../../includes/utils.h"
-#include "static_includes/raycast_utils.h"
+#include "../../includes/app.h"
 
 void	draw_map_cell(t_app *app, int mx, int my, uint32_t color)
 {

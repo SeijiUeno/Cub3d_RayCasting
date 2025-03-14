@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/render.h"
-#include "../../includes/input_handler.h"
+#include "../../includes/app.h"
 
 void	update_frame(void *param)
 {

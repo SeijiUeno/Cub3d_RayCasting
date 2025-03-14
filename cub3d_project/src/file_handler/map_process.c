@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "helper/parser_helpers.h"
-#include "../convert/cub3d.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "../../includes/app.h"
 
 static void	process_map_cell(t_app *app, t_file *cube, size_t i, size_t j)
 {

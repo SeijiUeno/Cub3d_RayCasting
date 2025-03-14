@@ -1,4 +1,4 @@
-#include "../../includes/get_next_line.h"
+#include "../../includes/app.h"
 
 void	ft_bzero(void *s, size_t n)
 {

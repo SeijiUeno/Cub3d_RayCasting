@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
-#include "helper/parser_helpers.h"
+#include "../../includes/app.h"
 
 void	parse_cub_data(t_app *app, t_file *cube)
 {

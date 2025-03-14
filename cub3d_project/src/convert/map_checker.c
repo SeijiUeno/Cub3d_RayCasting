@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "convert.h"
-
+#include "../../includes/app.h"
 static void	check_wall(t_cube *src, int start[2], int i_step, int j_step)
 {
 	int	i;

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "../../includes/app.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -32,4 +32,14 @@ void	ft_putendl_fd(char *s, int fd)
 	ft_putstr_fd(s, fd);
 	i = write(fd, "\n", 1);
 	(void)i;
+}
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	unsigned long	i;
+
+	i = -1;
+	while (++i < n)
+		((unsigned char *)s)[i] = (unsigned char)c;
+	return (s);
 }

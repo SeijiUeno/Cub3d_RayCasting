@@ -15,8 +15,8 @@
 
 void	parse_colors(t_app *app, t_file *cube)
 {
-	app->config.floorColor = ft_pixel(cube->level.f[0],
+	app->config.floor_color = ft_pixel(cube->level.f[0],
 			cube->level.f[1], cube->level.f[2], 255);
-	app->config.ceilingColor = ft_pixel(cube->level.c[0],
+	app->config.sky_color = ft_pixel(cube->level.c[0],
 			cube->level.c[1], cube->level.c[2], 255);
 }

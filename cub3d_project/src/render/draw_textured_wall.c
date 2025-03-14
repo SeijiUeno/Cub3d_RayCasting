@@ -39,14 +39,14 @@ static	uint32_t	get_tex_color(const t_tex_info tex, int tex_y)
 	return (convert_texture_color(texture_color));
 }
 
-static uint32_t	compute_wall_pixel_color(const t_tex_info tex, int lineHeight,
+static uint32_t	compute_wall_pixel_color(const t_tex_info tex, int line_h,
 	int y, int screenHeight)
 {
 	int		d;
 	int		tex_y;
 
-	d = y * 256 - screenHeight * 128 + lineHeight * 128;
-	tex_y = ((d * tex.texHeight) / lineHeight) / 256;
+	d = y * 256 - screenHeight * 128 + line_h * 128;
+	tex_y = ((d * tex.texHeight) / line_h) / 256;
 	if (tex_y < 0)
 		tex_y = 0;
 	if (tex_y >= tex.texHeight)
@@ -59,10 +59,10 @@ void	draw_wall(t_app *app, int x, t_column_draw *cd, t_tex_info tex)
 	int			y;
 	uint32_t	wall_color;
 
-	y = cd->drawStart;
-	while (y <= cd->drawEnd)
+	y = cd->draw_start;
+	while (y <= cd->draw_end)
 	{
-		wall_color = compute_wall_pixel_color(tex, cd->lineHeight, y, HEIGHT);
+		wall_color = compute_wall_pixel_color(tex, cd->line_h, y, HEIGHT);
 		mlx_put_pixel(app->gfx.img, x, y, wall_color);
 		y++;
 	}

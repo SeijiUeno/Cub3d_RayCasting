@@ -43,52 +43,52 @@ void	init_ray_data(t_app *app, int x, t_ray_data *rd)
 
 	p = &app->player;
 	camera = 2.0 * x / (double)WIDTH - 1.0;
-	rd->raydir_x = p->dir_x + p->planeX * camera;
-	rd->raydir_y = p->dir_y + p->planeY * camera;
-	rd->mapX = (int)(p->pos_x
+	rd->raydir_x = p->dir_x + p->plan_x * camera;
+	rd->raydir_y = p->dir_y + p->plan_y * camera;
+	rd->mp_x = (int)(p->pos_x
 );
-	rd->mapY = (int)(p->pos_y);
+	rd->mp_y = (int)(p->pos_y);
 	if (rd->raydir_x == 0)
-		rd->deltaDistX = RAY_INFINITY;
+		rd->deltad_x = RAY_INFINITY;
 	else
-		rd->deltaDistX = fabs(1 / rd->raydir_x);
+		rd->deltad_x = fabs(1 / rd->raydir_x);
 	if (rd->raydir_y == 0)
-		rd->deltaDistY = RAY_INFINITY;
+		rd->deltad_y = RAY_INFINITY;
 	else
-		rd->deltaDistY = fabs(1 / rd->raydir_y);
+		rd->deltad_y = fabs(1 / rd->raydir_y);
 	info_x = compute_step_side(p->pos_x
-, rd->raydir_x, rd->mapX, rd->deltaDistX);
-	rd->stepX = info_x.step;
-	rd->side_distX = info_x.side_dist;
-	info_y = compute_step_side(p->pos_y, rd->raydir_y, rd->mapY, rd->deltaDistY);
-	rd->stepY = info_y.step;
-	rd->side_distY = info_y.side_dist;
+, rd->raydir_x, rd->mp_x, rd->deltad_x);
+	rd->step_x = info_x.step;
+	rd->side_dist_x = info_x.side_dist;
+	info_y = compute_step_side(p->pos_y, rd->raydir_y, rd->mp_y, rd->deltad_y);
+	rd->step_y = info_y.step;
+	rd->side_dist_y = info_y.side_dist;
 }
 
 double	dda(t_app *app, t_ray_data *rd)
 {
 	while (1)
 	{
-		if (rd->side_distX < rd->side_distY)
+		if (rd->side_dist_x < rd->side_dist_y)
 		{
-			rd->side_distX += rd->deltaDistX;
-			rd->mapX += rd->stepX;
+			rd->side_dist_x += rd->deltad_x;
+			rd->mp_x += rd->step_x;
 			rd->side = 0;
 		}
 		else
 		{
-			rd->side_distY += rd->deltaDistY;
-			rd->mapY += rd->stepY;
+			rd->side_dist_y += rd->deltad_y;
+			rd->mp_y += rd->step_y;
 			rd->side = 1;
 		}
-		if (rd->mapX < 0 || rd->mapX >= (int)app->map.width
-			|| rd->mapY < 0 || rd->mapY >= (int)app->map.height)
+		if (rd->mp_x < 0 || rd->mp_x >= (int)app->map.width
+			|| rd->mp_y < 0 || rd->mp_y >= (int)app->map.height)
 			return (HEIGHT);
-		if (app->map.world[rd->mapY][rd->mapX] > 0)
+		if (app->map.world[rd->mp_y][rd->mp_x] > 0)
 			break ;
 	}
 	if (rd->side == 0)
-		return (rd->side_distX - rd->deltaDistX);
+		return (rd->side_dist_x - rd->deltad_x);
 	else
-		return (rd->side_distY - rd->deltaDistY);
+		return (rd->side_dist_y - rd->deltad_y);
 }

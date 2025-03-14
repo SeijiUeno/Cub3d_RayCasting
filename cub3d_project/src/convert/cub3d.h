@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "../../includes/get_next_line.h"
-# include "../../includes/structures.h"
+# include "../../includes/app.h"
 
 # define ERROR "\033[31mError!\033[0m"
 # define ROW 100

@@ -4,14 +4,14 @@
 
 static void	cleanup_textures(t_app *app)
 {
-	if (app->gfx.texNorth)
-		mlx_delete_texture(app->gfx.texNorth);
-	if (app->gfx.texSouth)
-		mlx_delete_texture( app->gfx.texSouth);
-	if (app->gfx.texEast)
-		mlx_delete_texture(app->gfx.texEast);
-	if (app->gfx.texWest)
-		mlx_delete_texture(app->gfx.texWest);
+	if (app->gfx.tex_no)
+		mlx_delete_texture(app->gfx.tex_no);
+	if (app->gfx.tex_so)
+		mlx_delete_texture( app->gfx.tex_so);
+	if (app->gfx.tex_ea)
+		mlx_delete_texture(app->gfx.tex_ea);
+	if (app->gfx.tex_we)
+		mlx_delete_texture(app->gfx.tex_we);
 }
 
 void	cleanup_app(t_app *app)
@@ -31,12 +31,12 @@ void	cleanup_app(t_app *app)
 			free(app->map.world);
 	}
 	cleanup_textures(app);
-	if (app->config.texNorthPath)
-		free(app->config.texNorthPath);
-	if (app->config.texSouthPath)
-		free(app->config.texSouthPath);
-	if (app->config.texEastPath)
-		free(app->config.texEastPath);
-	if (app->config.texWestPath)
-		free(app->config.texWestPath);
+	if (app->config.tex_no_ph)
+		free(app->config.tex_no_ph);
+	if (app->config.tex_so_ph)
+		free(app->config.tex_so_ph);
+	if (app->config.tex_ea_ph)
+		free(app->config.tex_ea_ph);
+	if (app->config.tex_we_ph)
+		free(app->config.tex_we_ph);
 }

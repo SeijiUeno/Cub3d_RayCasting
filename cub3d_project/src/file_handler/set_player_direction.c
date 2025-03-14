@@ -16,32 +16,32 @@ static void	set_north(t_app *app)
 {
 	app->player.dir_x = 0;
 	app->player.dir_y = -1;
-	app->player.planeX = 0.66;
-	app->player.planeY = 0;
+	app->player.plan_x = 0.66;
+	app->player.plan_y = 0;
 }
 
 static void	set_south(t_app *app)
 {
 	app->player.dir_x = 0;
 	app->player.dir_y = 1;
-	app->player.planeX = -0.66;
-	app->player.planeY = 0;
+	app->player.plan_x = -0.66;
+	app->player.plan_y = 0;
 }
 
 static void	set_east(t_app *app)
 {
 	app->player.dir_x = 1;
 	app->player.dir_y = 0;
-	app->player.planeX = 0;
-	app->player.planeY = 0.66;
+	app->player.plan_x = 0;
+	app->player.plan_y = 0.66;
 }
 
 static void	set_west(t_app *app)
 {
 	app->player.dir_x = -1;
 	app->player.dir_y = 0;
-	app->player.planeX = 0;
-	app->player.planeY = -0.66;
+	app->player.plan_x = 0;
+	app->player.plan_y = -0.66;
 }
 
 void	set_player_direction(t_app *app, char c)

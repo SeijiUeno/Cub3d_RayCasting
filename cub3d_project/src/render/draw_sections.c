@@ -45,10 +45,10 @@ void	draw_full_column(t_app *app, t_column_draw *col_draw, t_tex_info tex)
 	t_vertical_segment	sky;
 	t_vertical_segment	floor;
 
-	sky = init_vertical_segment(col_draw->x, 0, col_draw->drawStart,
-			app->config.ceilingColor);
-	floor = init_vertical_segment(col_draw->x, col_draw->drawEnd + 1,
-			HEIGHT, app->config.floorColor);
+	sky = init_vertical_segment(col_draw->x, 0, col_draw->draw_start,
+			app->config.sky_color);
+	floor = init_vertical_segment(col_draw->x, col_draw->draw_end + 1,
+			HEIGHT, app->config.floor_color);
 
 	draw_vertical_segment(app->gfx.img, &sky);
 	draw_wall(app, col_draw->x, col_draw, tex);

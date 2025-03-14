@@ -23,12 +23,12 @@ static void	init_mlx_and_textures(t_app *app)
 	{
 		exit(EXIT_FAILURE);
 	}
-	app->gfx.texNorth = mlx_load_png(app->config.texNorthPath);
-	app->gfx.texSouth = mlx_load_png(app->config.texSouthPath);
-	app->gfx.texEast = mlx_load_png(app->config.texEastPath);
-	app->gfx.texWest = mlx_load_png(app->config.texWestPath);
-	if (!app->gfx.texNorth || !app->gfx.texSouth
-		|| !app->gfx.texEast || !app->gfx.texWest)
+	app->gfx.tex_no = mlx_load_png(app->config.tex_no_ph);
+	app->gfx.tex_so = mlx_load_png(app->config.tex_so_ph);
+	app->gfx.tex_ea = mlx_load_png(app->config.tex_ea_ph);
+	app->gfx.tex_we = mlx_load_png(app->config.tex_we_ph);
+	if (!app->gfx.tex_no || !app->gfx.tex_so
+		|| !app->gfx.tex_ea || !app->gfx.tex_we)
 	{
 		cleanup_app(app);
 		exit(EXIT_FAILURE);
@@ -45,10 +45,10 @@ static void	init_mlx_and_textures(t_app *app)
 
 static void	init_app(t_app *app, t_file *cube)
 {
-	app->player.moveSpeed = 0.05;
-	app->player.rotSpeed = 0.03;
-	app->config.floorColor = 0x006400FF;
-	app->config.ceilingColor = 0x87CEEBFF;
+	app->player.move_sped = 0.05;
+	app->player.rot_sped = 0.03;
+	app->config.floor_color = 0x006400FF;
+	app->config.sky_color = 0x87CEEBFF;
 	app->map.world = NULL;
 	parse_cub_data(app, cube);
 }

@@ -22,16 +22,16 @@ t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x)
 	if (rd->side == 0)
 	{
 		if (rd->raydir_x < 0)
-			info.texture = app->gfx.texEast;
+			info.texture = app->gfx.tex_ea;
 		else
-			info.texture = app->gfx.texWest;
+			info.texture = app->gfx.tex_we;
 	}
 	else
 	{
 		if (rd->raydir_y < 0)
-			info.texture = app->gfx.texSouth;
+			info.texture = app->gfx.tex_so;
 		else
-			info.texture = app->gfx.texNorth;
+			info.texture = app->gfx.tex_no;
 	}
 	info.texWidth = info.texture->width;
 	info.texHeight = info.texture->height;
@@ -45,16 +45,16 @@ t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x)
 static void	compute_wall_slice_limits(t_column_draw *col_draw,
 	double perp_wall_dist)
 {
-	col_draw->lineHeight = (int)(HEIGHT / perp_wall_dist);
-	if (col_draw->lineHeight <= 0)
-		col_draw->lineHeight = 1;
+	col_draw->line_h = (int)(HEIGHT / perp_wall_dist);
+	if (col_draw->line_h <= 0)
+		col_draw->line_h = 1;
 
-	col_draw->drawStart = -col_draw->lineHeight / 2 + HEIGHT / 2;
-	if (col_draw->drawStart < 0)
-		col_draw->drawStart = 0;
-	col_draw->drawEnd = col_draw->lineHeight / 2 + HEIGHT / 2;
-	if (col_draw->drawEnd >= HEIGHT)
-		col_draw->drawEnd = HEIGHT - 1;
+	col_draw->draw_start = -col_draw->line_h / 2 + HEIGHT / 2;
+	if (col_draw->draw_start < 0)
+		col_draw->draw_start = 0;
+	col_draw->draw_end = col_draw->line_h / 2 + HEIGHT / 2;
+	if (col_draw->draw_end >= HEIGHT)
+		col_draw->draw_end = HEIGHT - 1;
 }
 
 static void	map_wall_texture_coordinates(t_app *app, t_ray_data rd,
@@ -64,17 +64,17 @@ static void	map_wall_texture_coordinates(t_app *app, t_ray_data rd,
 
 	if (rd.side == 0)
 	{
-		col_draw->wallX = app->player.pos_y + perp_wall_dist * rd.raydir_y;
+		col_draw->wall_x = app->player.pos_y + perp_wall_dist * rd.raydir_y;
 	}
 	else
 	{
-		col_draw->wallX = app->player.pos_x
+		col_draw->wall_x = app->player.pos_x
  + perp_wall_dist * rd.raydir_x;
 	}
-	col_draw->wallX = col_draw->wallX - floor(col_draw->wallX);
+	col_draw->wall_x = col_draw->wall_x - floor(col_draw->wall_x);
 	col_draw->raydir_x = rd.raydir_x;
 	col_draw->raydir_y = rd.raydir_y;
-	tex = select_tex_info(app, &rd, col_draw->wallX);
+	tex = select_tex_info(app, &rd, col_draw->wall_x);
 	draw_full_column(app, col_draw, tex);
 }
 

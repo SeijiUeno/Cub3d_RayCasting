@@ -26,8 +26,8 @@ void	parse_textures(t_app *app, t_file *cube)
 {
 	const char	*prefix = "assets/textures/";
 
-	app->config.texNorthPath = get_tex_path(prefix, cube->level.no);
-	app->config.texSouthPath = get_tex_path(prefix, cube->level.so);
-	app->config.texEastPath = get_tex_path(prefix, cube->level.ea);
-	app->config.texWestPath = get_tex_path(prefix, cube->level.we);
+	app->config.tex_no_ph = get_tex_path(prefix, cube->level.no);
+	app->config.tex_so_ph = get_tex_path(prefix, cube->level.so);
+	app->config.tex_ea_ph = get_tex_path(prefix, cube->level.ea);
+	app->config.tex_we_ph = get_tex_path(prefix, cube->level.we);
 }

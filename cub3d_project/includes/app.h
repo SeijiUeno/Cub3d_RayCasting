@@ -19,5 +19,6 @@
 # include <math.h>
 
 void	cleanup_app(t_app *app);
+void	msg_error(const char *error_msg, const int error_code);
 
 #endif

@@ -22,30 +22,30 @@ typedef struct s_player
 	double	pos_y;
 	double	dir_x;
 	double	dir_y;
-	double	planeX;
-	double	planeY;
-	double	moveSpeed;
-	double	rotSpeed;
+	double	plan_x;
+	double	plan_y;
+	double	move_sped;
+	double	rot_sped;
 }	t_player;
 
 typedef struct s_graphics
 {
-	mlx_t	*mlx;
-	mlx_image_t	*img;
-	mlx_texture_t	*texNorth;
-	mlx_texture_t	*texSouth;
-	mlx_texture_t	*texEast;
-	mlx_texture_t	*texWest;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	mlx_texture_t	*tex_no;
+	mlx_texture_t	*tex_so;
+	mlx_texture_t	*tex_ea;
+	mlx_texture_t	*tex_we;
 }	t_graphics;
 
 typedef struct s_config
 {
-	char		*texNorthPath;
-	char		*texSouthPath;
-	char		*texEastPath;
-	char		*texWestPath;
-	uint32_t	floorColor;
-	uint32_t	ceilingColor;
+	char		*tex_no_ph;
+	char		*tex_so_ph;
+	char		*tex_ea_ph;
+	char		*tex_we_ph;
+	uint32_t	floor_color;
+	uint32_t	sky_color;
 }	t_config;
 
 typedef struct s_map
@@ -60,7 +60,7 @@ typedef struct s_app
 	t_player	player;
 	t_graphics	gfx;
 	t_config	config;
-	t_map	map;
+	t_map		map;
 }	t_app;
 
 #endif

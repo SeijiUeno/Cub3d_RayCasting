@@ -43,11 +43,11 @@ void	rotate_player(t_app *app, double angle)
 	cos_a = cos(angle);
 	sin_a = sin(angle);
 	rotate_vector(&app->player.dir_x, &app->player.dir_y, cos_a, sin_a);
-	rotate_vector(&app->player.planeX, &app->player.planeY, cos_a, sin_a);
+	rotate_vector(&app->player.plan_x, &app->player.plan_y, cos_a, sin_a);
 	normalize_vector(&app->player.dir_x, &app->player.dir_y);
-	normalize_vector(&app->player.planeX, &app->player.planeY);
-	app->player.planeX *= 0.66;
-	app->player.planeY *= 0.66;
+	normalize_vector(&app->player.plan_x, &app->player.plan_y);
+	app->player.plan_x *= 0.66;
+	app->player.plan_y *= 0.66;
 }
 
 static void	move_player(t_app *app, double mult)
@@ -57,8 +57,8 @@ static void	move_player(t_app *app, double mult)
 	double	move_x;
 	double	move_y;
 
-	move_x = app->player.dir_x * app->player.moveSpeed * mult;
-	move_y = app->player.dir_y * app->player.moveSpeed * mult;
+	move_x = app->player.dir_x * app->player.move_sped * mult;
+	move_y = app->player.dir_y * app->player.move_sped * mult;
 	new_x = app->player.pos_x + move_x;
 	new_y = app->player.pos_y + move_y;
 	if (new_x >= 0 && new_x < app->map.width
@@ -78,7 +78,7 @@ void	process_input(t_app *app)
 	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_S))
 		move_player(app, -1.0);
 	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_A))
-		rotate_player(app, -app->player.rotSpeed);
+		rotate_player(app, -app->player.rot_sped);
 	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_D))
-		rotate_player(app, app->player.rotSpeed);
+		rotate_player(app, app->player.rot_sped);
 }

@@ -52,6 +52,6 @@ void		draw_wall(t_app *app, int x, t_column_draw *cd, t_tex_info tex);
 void		render_column(t_app *app, int x);
 void		init_ray_data(t_app *app, int x, t_ray_data *rd);
 double		dda(t_app *app, t_ray_data *rd);
-t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wallX);
+t_tex_info	select_tex_info(t_app *app, t_ray_data *rd, double wall_x);
 
 #endif

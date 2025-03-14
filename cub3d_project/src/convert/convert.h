@@ -34,13 +34,11 @@ typedef struct s_file_elem
 }	t_file_elem;
 
 int		check_base(int argc, char *argv[]);
-void	msg_error(const char *error_msg, const int error_code);
 void	error_msg_setter(t_file_elem *file_el,
 			const char *error_msg, const int error_code);
 void	set_map(t_file_elem *file_el);
 void	checker_map(t_cube *src);
 void	get_elements(t_file_elem *file_el);
 int		set_rgb(const char *str, int *dest);
-
 
 #endif

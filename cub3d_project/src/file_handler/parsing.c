@@ -27,32 +27,32 @@
 //      * duplicate it. Otherwise, prepend the prefix.
 //      */
 //     if (ft_strncmp(cube->level.no, prefix, ft_strlen(prefix)) == 0)
-//         app->config.texNorthPath = ft_strdup(cube->level.no);
+//         app->config.tex_no_ph = ft_strdup(cube->level.no);
 //     else
-//         app->config.texNorthPath = prepend_prefix(prefix, cube->level.no);
+//         app->config.tex_no_ph = prepend_prefix(prefix, cube->level.no);
 
 //     if (ft_strncmp(cube->level.so, prefix, ft_strlen(prefix)) == 0)
-//         app->config.texSouthPath = ft_strdup(cube->level.so);
+//         app->config.tex_so_ph = ft_strdup(cube->level.so);
 //     else
-//         app->config.texSouthPath = prepend_prefix(prefix, cube->level.so);
+//         app->config.tex_so_ph = prepend_prefix(prefix, cube->level.so);
 
 //     if (ft_strncmp(cube->level.ea, prefix, ft_strlen(prefix)) == 0)
-//         app->config.texEastPath = ft_strdup(cube->level.ea);
+//         app->config.tex_ea_ph = ft_strdup(cube->level.ea);
 //     else
-//         app->config.texEastPath = prepend_prefix(prefix, cube->level.ea);
+//         app->config.tex_ea_ph = prepend_prefix(prefix, cube->level.ea);
 
 //     if (ft_strncmp(cube->level.we, prefix, ft_strlen(prefix)) == 0)
-//         app->config.texWestPath = ft_strdup(cube->level.we);
+//         app->config.tex_we_ph = ft_strdup(cube->level.we);
 //     else
-//         app->config.texWestPath = prepend_prefix(prefix, cube->level.we);
+//         app->config.tex_we_ph = prepend_prefix(prefix, cube->level.we);
 
 //     /* Process colors.
 //      * Convert the RGB arrays to a pixel value.
 //      */
-//     app->config.floorColor = ft_pixel(cube->level.f[0],
+//     app->config.floor_color = ft_pixel(cube->level.f[0],
 //                                       cube->level.f[1],
 //                                       cube->level.f[2], 255);
-//     app->config.ceilingColor = ft_pixel(cube->level.c[0],
+//     app->config.sky_color = ft_pixel(cube->level.c[0],
 //                                         cube->level.c[1],
 //                                         cube->level.c[2], 255);
 
@@ -94,29 +94,29 @@
 //                 {
 //                     app->player.dir_x = 0;
 //                     app->player.dir_y = -1;
-//                     app->player.planeX = 0.66;
-//                     app->player.planeY = 0;
+//                     app->player.plan_x = 0.66;
+//                     app->player.plan_y = 0;
 //                 }
 //                 else if (c == 'S')
 //                 {
 //                     app->player.dir_x = 0;
 //                     app->player.dir_y = 1;
-//                     app->player.planeX = -0.66;
-//                     app->player.planeY = 0;
+//                     app->player.plan_x = -0.66;
+//                     app->player.plan_y = 0;
 //                 }
 //                 else if (c == 'E')
 //                 {
 //                     app->player.dir_x = 1;
 //                     app->player.dir_y = 0;
-//                     app->player.planeX = 0;
-//                     app->player.planeY = 0.66;
+//                     app->player.plan_x = 0;
+//                     app->player.plan_y = 0.66;
 //                 }
 //                 else if (c == 'W')
 //                 {
 //                     app->player.dir_x = -1;
 //                     app->player.dir_y = 0;
-//                     app->player.planeX = 0;
-//                     app->player.planeY = -0.66;
+//                     app->player.plan_x = 0;
+//                     app->player.plan_y = -0.66;
 //                 }
 //                 /* Mark player's starting cell as empty */
 //                 app->map.world[i][j] = 0;

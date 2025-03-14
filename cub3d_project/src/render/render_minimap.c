@@ -88,8 +88,7 @@ void	draw_player_minimap(t_app *app)
 	t_point	p0;
 	t_point	p1;
 
-	p0.x = (int)(app->player.pos_x
- * MINIMAP_SCALE);
+	p0.x = (int)(app->player.pos_x * MINIMAP_SCALE);
 	p0.y = (int)(app->player.pos_y * MINIMAP_SCALE);
 	draw_player_icon(app, p0.x, p0.y);
 	p1.x = p0.x + (int)(app->player.dir_x * 8);

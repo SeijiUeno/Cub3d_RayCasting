@@ -44,8 +44,8 @@ static void	draw_line_loop(mlx_image_t *img, t_point pts[2],
 
 	while (1)
 	{
-		if (pts[0].x >= 0 && pts[0].x < (int)img->width &&
-			pts[0].y >= 0 && pts[0].y < (int)img->height)
+		if (pts[0].x >= 0 && pts[0].x < (int)img->width
+			&& pts[0].y >= 0 && pts[0].y < (int)img->height)
 			mlx_put_pixel(img, pts[0].x, pts[0].y, color);
 		if (pts[0].x == pts[1].x && pts[0].y == pts[1].y)
 			break ;

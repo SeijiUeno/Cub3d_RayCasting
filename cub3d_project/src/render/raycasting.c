@@ -41,8 +41,7 @@ void	init_ray_data(t_app *app, int x, t_ray_data *rd)
 	camera = 2.0 * x / (double)WIDTH - 1.0;
 	rd->raydir_x = p->dir_x + p->plan_x * camera;
 	rd->raydir_y = p->dir_y + p->plan_y * camera;
-	rd->mp_x = (int)(p->pos_x
-);
+	rd->mp_x = (int)(p->pos_x);
 	rd->mp_y = (int)(p->pos_y);
 	if (rd->raydir_x == 0)
 		rd->deltad_x = RAY_INFINITY;
@@ -52,8 +51,7 @@ void	init_ray_data(t_app *app, int x, t_ray_data *rd)
 		rd->deltad_y = RAY_INFINITY;
 	else
 		rd->deltad_y = fabs(1 / rd->raydir_y);
-	info_x = compute_step_side(p->pos_x
-, rd->raydir_x, rd->mp_x, rd->deltad_x);
+	info_x = compute_step_side(p->pos_x, rd->raydir_x, rd->mp_x, rd->deltad_x);
 	rd->step_x = info_x.step;
 	rd->side_dist_x = info_x.side_dist;
 	info_y = compute_step_side(p->pos_y, rd->raydir_y, rd->mp_y, rd->deltad_y);

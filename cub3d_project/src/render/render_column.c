@@ -65,8 +65,7 @@ static void	map_wall_texture_coordinates(t_app *app, t_ray_data rd,
 	}
 	else
 	{
-		col_draw->wall_x = app->player.pos_x
- + perp_wall_dist * rd.raydir_x;
+		col_draw->wall_x = app->player.pos_x + perp_wall_dist * rd.raydir_x;
 	}
 	col_draw->wall_x = col_draw->wall_x - floor(col_draw->wall_x);
 	col_draw->raydir_x = rd.raydir_x;

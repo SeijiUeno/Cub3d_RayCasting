@@ -27,30 +27,3 @@ int	check_base(int argc, char *argv[])
 		msg_error(strerror(errno), 3);
 	return (fd);
 }
-
-int	set_rgb(const char *str, int *dest)
-{
-	size_t	i;
-	size_t	zeros;
-	char	*mov;
-	int		number;
-
-	zeros = 0;
-	mov = (char *)str;
-	while (ft_isspace(*mov))
-		mov++;
-	while (mov[zeros] == '0')
-		zeros++;
-	i = 0;
-	while (ft_isdigit(mov[zeros + i]))
-		i++;
-	if (i + zeros == 0 || i > 3)
-		return (0);
-	number = ft_atoi(mov + zeros);
-	if (0 <= number && number <= 255)
-	{
-		*dest = (unsigned char)number;
-		return (1);
-	}
-	return (0);
-}

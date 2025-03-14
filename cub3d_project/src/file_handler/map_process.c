@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   map_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 18:32:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 18:50:51 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:32:11 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static void	process_map_cell(t_app *app, t_file *cube, size_t i, size_t j)
 		app->map.world[i][j] = 0;
 	else
 	{
-		fprintf(stderr, "Invalid map character '%c' at (%zu, %zu)\n",
-			c, i, j);
+		msg_error("Invalid map character", 42);
 		exit(EXIT_FAILURE);
 	}
 }

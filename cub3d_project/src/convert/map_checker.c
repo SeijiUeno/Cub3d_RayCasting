@@ -29,7 +29,7 @@ static void	check_wall(t_cube *src, int start[2], int i_step, int j_step)
 		i += i_step;
 		j += j_step;
 	}
-	msg_error("error", 33);
+	msg_error("error", 42);
 }
 
 static void	walls_around(t_cube *src, int i, int j)
@@ -54,10 +54,10 @@ static void	valid_char(const char c, int *count_player)
 	if (ft_strchr(valids, c))
 		return ;
 	if (!ft_strchr(player, c))
-		msg_error("Bad map charachter", 34);
+		msg_error("Bad map charachter", 42);
 	(*count_player)++;
 	if (*count_player > 1)
-		msg_error("Only one player allowed in the map", 30);
+		msg_error("Only one player allowed in the map", 42);
 }
 
 void	checker_map(t_cube *src)
@@ -78,5 +78,5 @@ void	checker_map(t_cube *src)
 		}
 	}
 	if (!count_player)
-		msg_error("One player needed in the map", 31);
+		msg_error("One player needed in the map", 42);
 }

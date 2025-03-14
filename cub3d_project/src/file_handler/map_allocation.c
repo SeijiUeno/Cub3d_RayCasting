@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   map_allocation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 18:24:33 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 18:50:51 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:31:56 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	allocate_map(t_app *app, t_file *cube)
 	app->map.world = malloc(sizeof(int *) * app->map.height);
 	if (!app->map.world)
 	{
-		perror("malloc error");
+		ft_error("malloc error");
 		exit(EXIT_FAILURE);
 	}
 	i = 0;
@@ -30,7 +30,7 @@ void	allocate_map(t_app *app, t_file *cube)
 		app->map.world[i] = malloc(sizeof(int) * app->map.width);
 		if (!app->map.world[i])
 		{
-			perror("malloc error");
+			ft_error("malloc error");
 			exit(EXIT_FAILURE);
 		}
 		i++;

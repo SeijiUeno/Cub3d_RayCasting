@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_elements.c                                     :+:      :+:    :+:   */
+/*   file_elements_setter.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 18:35:41 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 21:21:49 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:31:09 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	get_rgb(int dest[3], const char *str, t_file_elem *file_el)
 	int		i;
 
 	if (!set_rgb(str, dest))
-		error_msg_setter(file_el, "FIle Bad RGB", 7);
+		error_msg_setter(file_el, "FIle Bad RGB", 42);
 	i = -1;
 	index = 0;
 	while (str[++i] && str[i] != '\n')
@@ -28,16 +28,16 @@ static void	get_rgb(int dest[3], const char *str, t_file_elem *file_el)
 		if (str[i] == ',' && ++index)
 		{
 			if (index > 2)
-				error_msg_setter(file_el, "FIle Bad RGB", 8);
+				error_msg_setter(file_el, "FIle Bad RGB", 42);
 			if (!set_rgb(str + i + 1, dest + index))
-				error_msg_setter(file_el, "FIle Bad RGB", 9);
+				error_msg_setter(file_el, "FIle Bad RGB", 42);
 			continue ;
 		}
-		error_msg_setter(file_el, "FIle Bad RGB!!!", 10);
+		error_msg_setter(file_el, "FIle Bad RGB!!!", 42);
 	}
 	if (index == 2)
 		return ;
-	error_msg_setter(file_el, "FIle Bad RGB!!", 11);
+	error_msg_setter(file_el, "FIle Bad RGB!!", 42);
 }
 
 static void	copy_element(int index, t_file_elem *file_el, const char *str)
@@ -76,13 +76,13 @@ static void	get_element(t_file_elem *file_el, int *gotten_elements)
 				j++;
 			index = 1 << i;
 			if (*gotten_elements & index)
-				error_msg_setter(file_el, "RePeTeD Elements!!", 6);
+				error_msg_setter(file_el, "RePeTeD Elements!!", 42);
 			copy_element(index, file_el, file_el->line + j);
 			*gotten_elements |= index;
 			return ;
 		}
 	}
-	error_msg_setter(file_el, "missing element or invalid one", 8);
+	error_msg_setter(file_el, "missing element or invalid one", 42);
 }
 
 void	get_elements(t_file_elem *file_el)
@@ -94,9 +94,9 @@ void	get_elements(t_file_elem *file_el)
 	{
 		file_el->line = get_next_line(file_el->fd);
 		if (!file_el->line)
-			error_msg_setter(file_el, "Missing Elements In the Cub File", 4);
+			error_msg_setter(file_el, "Missing Elements! In the Cub File\n", 42);
 		if (ft_strlen(file_el->line) > COL)
-			error_msg_setter(file_el, "COL ERROR - TO MANY", 5);
+			error_msg_setter(file_el, "COL ERROR - TO MANY", 42);
 		if (*file_el->line != '\n')
 			get_element(file_el, &gotten_elements);
 		free (file_el->line);

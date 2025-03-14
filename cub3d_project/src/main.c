@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:41:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 15:43:22 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:35:39 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@ static void	init_mlx_and_textures(t_app *app)
 	if (!app->gfx.tex_no || !app->gfx.tex_so
 		|| !app->gfx.tex_ea || !app->gfx.tex_we)
 	{
+		mlx_terminate(app->gfx.mlx);
 		cleanup_app(app);
-		exit(EXIT_FAILURE);
+		msg_error("failed to load PNG!", EXIT_FAILURE);
 	}
 	app->gfx.img = mlx_new_image(app->gfx.mlx, WIDTH, HEIGHT);
 	if (!app->gfx.img)
 	{
 		mlx_close_window(app->gfx.mlx);
+		mlx_terminate(app->gfx.mlx);
 		cleanup_app(app);
-		exit(EXIT_FAILURE);
+		msg_error("failed to create mlx image", EXIT_FAILURE);
 	}
 	mlx_image_to_window(app->gfx.mlx, app->gfx.img, 0, 0);
 }
@@ -64,11 +66,9 @@ int	main(int argc, char **argv)
 	t_file	cub;
 
 	if (argc != 2)
-	{
-		printf("Usage: %s file.cub\n", argv[0]);
-		return (EXIT_FAILURE);
-	}
+		msg_error("Usage: ./cub3d <map_file.cub>", 42);
 	ft_memset(&cub, 0, sizeof(t_file));
+	ft_memset(&app, 0, sizeof(t_app));
 	convert(argc, argv, &cub.level);
 	init_app(&app, &cub);
 	run_app(&app);

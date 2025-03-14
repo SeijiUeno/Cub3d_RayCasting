@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/utils.h"
+#include "../includes/get_next_line.h"
 #include <stdlib.h>
 
 char	*ft_strdup(const char *s)
@@ -72,4 +73,14 @@ char	*ft_strndup(const char *s, size_t n)
 	}
 	dup[i] = '\0';
 	return (dup);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+		if (*s++ == (unsigned char)c)
+			return ((char *)--s);
+	if ((unsigned char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }

@@ -29,7 +29,6 @@ typedef struct s_buffer
 	int		bslash;
 }	t_buffer;
 
-
 int		ft_isdigit(int c);
 int		ft_isspace(int c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -39,6 +38,10 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	ft_bzero(void *s, size_t n);
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *s);
+char	*ft_strndup(const char *s, size_t n);
+int		ft_atoi(const char *str);
 char	*ft_strchr(const char *s, int c);
 
 #endif

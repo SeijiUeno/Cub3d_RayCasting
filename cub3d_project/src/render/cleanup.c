@@ -3,10 +3,10 @@
 
 static void	cleanup_textures(t_app *app)
 {
+	if (app->gfx.tex_so)
+		mlx_delete_texture(app->gfx.tex_so);
 	if (app->gfx.tex_no)
 		mlx_delete_texture(app->gfx.tex_no);
-	if (app->gfx.tex_so)
-		mlx_delete_texture( app->gfx.tex_so);
 	if (app->gfx.tex_ea)
 		mlx_delete_texture(app->gfx.tex_ea);
 	if (app->gfx.tex_we)

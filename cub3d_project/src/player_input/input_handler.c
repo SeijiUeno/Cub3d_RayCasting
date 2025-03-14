@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ecoelho- <ecoelho-@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:43:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 15:43:53 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:13:27 by ecoelho-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	rotate_player(t_app *app, double angle)
 	app->player.plan_y *= 0.66;
 }
 
-static void	move_player(t_app *app, double mult)
+void	move_player_foward_backward(t_app *app, double mult)
 {
 	double	new_x;
 	double	new_y;
@@ -67,16 +67,23 @@ static void	move_player(t_app *app, double mult)
 		app->player.pos_y = new_y;
 }
 
-void	process_input(t_app *app)
+void	move_player_right_left(t_app *app, double mult)
 {
-	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(app->gfx.mlx);
-	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_W))
-		move_player(app, 1.0);
-	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_S))
-		move_player(app, -1.0);
-	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_A))
-		rotate_player(app, -app->player.rot_sped);
-	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_D))
-		rotate_player(app, app->player.rot_sped);
+	double	new_x;
+	double	new_y;
+	double	move_x;
+	double	move_y;
+
+	move_x = app->player.plan_x * app->player.move_sped * mult;
+	move_y = app->player.plan_y * app->player.move_sped * mult;
+	new_x = app->player.pos_x + move_x;
+	new_y = app->player.pos_y + move_y;
+	if (new_x >= 0 && new_x < app->map.width
+		&& app->map.world[(int)app->player.pos_y][(int)new_x] == 0)
+		app->player.pos_x = new_x;
+	if (new_y >= 0 && new_y < app->map.height
+		&& app->map.world[(int)new_y][(int)app->player.pos_x] == 0)
+		app->player.pos_y = new_y;
 }
+
+

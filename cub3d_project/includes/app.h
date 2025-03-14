@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: ecoelho- <ecoelho-@student.42>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:40:24 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 15:42:04 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:13:18 by ecoelho-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "get_next_line.h"
 # include <MLX42/MLX42.h>
 
-# define WIDTH 640
-# define HEIGHT 480
+# define WIDTH 920
+# define HEIGHT 720
 # define CLEAR_COLOR 0x000000FF
 # define MINIMAP_SCALE 6
 # define ERROR "\033[31mError!\033[0m"
@@ -180,8 +180,10 @@ void		update_frame(void *param);
 
 void		parse_cub_data(t_app *app, t_file *cube);
 
-void		process_input(t_app *app);
-void		rotate_player(t_app *app, double angle);
+void	process_input(t_app *app);
+void	rotate_player(t_app *app, double angle);
+void	move_player_foward_backward(t_app *app, double mult);
+void	move_player_right_left(t_app *app, double mult);
 
 void		cleanup_app(t_app *app);
 void		msg_error(const char *error_msg, const int error_code);

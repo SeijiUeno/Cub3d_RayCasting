@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 18:35:41 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/13 21:08:10 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:21:49 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,24 +84,12 @@ static void	get_element(t_import_elements *lvl_el, int *gotten_elements)
 	}
 	get_elements_error(lvl_el, "Invalid or missing element", 8);
 }
-#include <ctype.h>  // If you use isspace; or use your ft_isspace consistently
-
-// Helper: return 1 if the line contains only whitespace.
-static int	is_blank_line(const char *line)
-{
-	while (*line)
-	{
-		if (!ft_isspace(*line))  // or use isspace(*line)
-			return (0);
-		line++;
-	}
-	return (1);
-}
 
 void	get_elements(t_import_elements *lvl_el)
 {
-	int		gotten_elements = 0;
+	int		gotten_elements;
 
+	gotten_elements = 0;
 	while (gotten_elements != E_ALL)
 	{
 		lvl_el->line = get_next_line(lvl_el->fd);
@@ -109,10 +97,9 @@ void	get_elements(t_import_elements *lvl_el)
 			get_elements_error(lvl_el, "Missing elements", 4);
 		if (ft_strlen(lvl_el->line) > MAX_COLS)
 			get_elements_error(lvl_el, "MAX_COLS exceeded", 5);
-		// Instead of checking only for '\n', check if the line is blank
-		if (!is_blank_line(lvl_el->line))
+		if (*lvl_el->line != '\n')
 			get_element(lvl_el, &gotten_elements);
-		free(lvl_el->line);
+		free (lvl_el->line);
 	}
 	lvl_el->line = NULL;
 }

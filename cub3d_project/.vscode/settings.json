@@ -3,6 +3,8 @@
         "import.h": "c",
         "unistd.h": "c",
         "render.h": "c",
-        "cub3d.h": "c"
+        "cub3d.h": "c",
+        "get_next_line.h": "c",
+        "convert.h": "c"
     }
 }

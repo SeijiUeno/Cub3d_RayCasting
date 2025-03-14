@@ -14,7 +14,7 @@
 # define PARSING_H
 
 # include "structures.h"
-# include "../src/import/cub3d.h"
+# include "../src/convert/cub3d.h"
 
 void parse_cub_data(t_app *app, t_file *cube);
 

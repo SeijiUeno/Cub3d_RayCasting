@@ -17,6 +17,11 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <stdlib.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <math.h>
+# include <stdio.h>
+# include <string.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024

@@ -13,8 +13,8 @@
 #include "../includes/app.h"
 #include "../includes/parsing.h"
 #include "../includes/render.h"
-#include "import/cub3d.h"
-#include "import/import.h"
+#include "convert/cub3d.h"
+#include "convert/convert.h"
 
 static void	init_mlx_and_textures(t_app *app)
 {
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	memset(&cub, 0, sizeof(t_file));
-	import(argc, argv, &cub.level);
+	convert(argc, argv, &cub.level);
 	init_app(&app, &cub);
 	run_app(&app);
 	return (EXIT_SUCCESS);

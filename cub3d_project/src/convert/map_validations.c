@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validations.c                                  :+:      :+:    :+:   */
+/*   checker_maps.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,40 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "import.h"
+#include "convert.h"
 
-static void	check_wall(t_cube *lvl, int start[2], int i_step, int j_step)
+static void	check_wall(t_cube *src, int start[2], int i_step, int j_step)
 {
 	int	i;
 	int	j;
 
 	i = start[0] + i_step;
 	j = start[1] + j_step;
-	while (i > -1 && j > -1 && lvl->map[i][j]
-		&& lvl->map[i][j] != ' ')
+	while (i > -1 && j > -1 && src->map[i][j]
+		&& src->map[i][j] != ' ')
 	{
-		if (lvl->map[i][j] == '1')
+		if (src->map[i][j] == '1')
 			return ;
-		if (lvl->map[i][j] == ' ')
+		if (src->map[i][j] == ' ')
 			break ;
 		i += i_step;
 		j += j_step;
 	}
-	exit_error_message("error", 33);
+	msg_error("error", 33);
 }
 
-static void	walls_around(t_cube *lvl, int i, int j)
+static void	walls_around(t_cube *src, int i, int j)
 {
 	int	start[2];
 
-	if (ft_strchr(" 1", lvl->map[i][j]))
+	if (ft_strchr(" 1", src->map[i][j]))
 		return ;
 	start[0] = i;
 	start[1] = j;
-	check_wall(lvl, start, -1, 0);
-	check_wall(lvl, start, 1, 0);
-	check_wall(lvl, start, 0, -1);
-	check_wall(lvl, start, 0, 1);
+	check_wall(src, start, -1, 0);
+	check_wall(src, start, 1, 0);
+	check_wall(src, start, 0, -1);
+	check_wall(src, start, 0, 1);
 }
 
 static void	valid_char(const char c, int *count_player)
@@ -54,13 +54,13 @@ static void	valid_char(const char c, int *count_player)
 	if (ft_strchr(valids, c))
 		return ;
 	if (!ft_strchr(player, c))
-		exit_error_message("Bad map charachter", 34);
+		msg_error("Bad map charachter", 34);
 	(*count_player)++;
 	if (*count_player > 1)
-		exit_error_message("Only one player allowed in the map", 30);
+		msg_error("Only one player allowed in the map", 30);
 }
 
-void	map_validation(t_cube *lvl)
+void	checker_map(t_cube *src)
 {
 	int	i;
 	int	j;
@@ -68,15 +68,15 @@ void	map_validation(t_cube *lvl)
 
 	count_player = 0;
 	i = -1;
-	while (++i < ROW && lvl->map[i][0])
+	while (++i < ROW && src->map[i][0])
 	{
 		j = -1;
-		while (++j < COL && lvl->map[i][j])
+		while (++j < COL && src->map[i][j])
 		{
-			valid_char(lvl->map[i][j], &count_player);
-			walls_around(lvl, i, j);
+			valid_char(src->map[i][j], &count_player);
+			walls_around(src, i, j);
 		}
 	}
 	if (!count_player)
-		exit_error_message("One player needed in the map", 31);
+		msg_error("One player needed in the map", 31);
 }

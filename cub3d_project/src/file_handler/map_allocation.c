@@ -12,7 +12,7 @@
 
 #include "../../includes/parsing.h"
 #include "helper/parser_helpers.h"
-#include "../import/cub3d.h"
+#include "../convert/cub3d.h"
 #include <stdlib.h>
 #include <stdio.h>
 

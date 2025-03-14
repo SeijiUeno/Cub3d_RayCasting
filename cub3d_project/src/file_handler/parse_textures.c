@@ -13,7 +13,7 @@
 #include "../../includes/parsing.h"
 #include "../../includes/file_utils.h"
 #include "../../includes/utils.h"
-#include "../import/cub3d.h"
+#include "../convert/cub3d.h"
 
 static char	*get_tex_path(const char *prefix, const char *path)
 {

@@ -15,8 +15,6 @@
 
 # include "cub3d.h"
 
-# define ERROR "\033[31mError\033[0m"
-
 enum e_elements
 {
 	NO = 1,
@@ -28,23 +26,21 @@ enum e_elements
 	E_ALL = 63
 };
 
-typedef struct s_import_elements
+typedef struct s_file_elem
 {
 	int		fd;
 	char	*line;
-	t_cube	*lvl;
-}	t_import_elements;
+	t_cube	*src;
+}	t_file_elem;
 
-int		basic_validation(int argc, char *argv[]);
-
-void	exit_error_message(const char *error_msg, const int error_code);
-void	get_elements_error(t_import_elements *lvl_el,
+int		check_base(int argc, char *argv[]);
+void	msg_error(const char *error_msg, const int error_code);
+void	error_msg_setter(t_file_elem *file_el,
 			const char *error_msg, const int error_code);
+void	set_map(t_file_elem *file_el);
+void	checker_map(t_cube *src);
+void	get_elements(t_file_elem *file_el);
+int		set_rgb(const char *str, int *dest);
 
-void	get_elements(t_import_elements *lvl_el);
-int		fill_valid_rgb_number(const char *str, int *dest);
-
-void	get_map(t_import_elements *lvl_el);
-void	map_validation(t_cube *lvl);
 
 #endif

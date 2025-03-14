@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_map.c                                          :+:      :+:    :+:   */
+/*   set_map.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "import.h"
+#include "convert.h"
 
-static int	line_break(t_import_elements *lvl_el, size_t *valid_lines)
+static int	line_break(t_file_elem *file_el, size_t *valid_lines)
 {
-	if (*lvl_el->line == '\n')
+	if (*file_el->line == '\n')
 	{
 		if (*valid_lines)
-			get_elements_error(lvl_el, "Map with blank row", 21);
-		free (lvl_el->line);
-		lvl_el->line = get_next_line(lvl_el->fd);
+			error_msg_setter(file_el, "Map with blank row", 21);
+		free (file_el->line);
+		file_el->line = get_next_line(file_el->fd);
 		return (1);
 	}
 	return (0);
@@ -34,24 +34,24 @@ static void	get_line_len(const char *line, size_t *len, size_t *x_size)
 		*x_size = *len;
 }
 
-void	get_map(t_import_elements *lvl_el)
+void	set_map(t_file_elem *file_el)
 {
 	size_t	len;
 
-	lvl_el->line = get_next_line(lvl_el->fd);
-	while (lvl_el->line)
+	file_el->line = get_next_line(file_el->fd);
+	while (file_el->line)
 	{
-		if (line_break(lvl_el, &lvl_el->lvl->y_size))
+		if (line_break(file_el, &file_el->src->y_size))
 			continue ;
-		get_line_len(lvl_el->line, &len, &lvl_el->lvl->x_size);
+		get_line_len(file_el->line, &len, &file_el->src->x_size);
 		if (len > COL)
-			get_elements_error(lvl_el, "Map COL exceeded", 23);
-		if (++(lvl_el->lvl->y_size) > ROW)
-			get_elements_error(lvl_el, "Map ROW exceeded", 22);
-		ft_memcpy(lvl_el->lvl->map[lvl_el->lvl->y_size - 1], lvl_el->line, len);
-		free (lvl_el->line);
-		lvl_el->line = get_next_line(lvl_el->fd);
+			error_msg_setter(file_el, "Map COL exceeded", 23);
+		if (++(file_el->src->y_size) > ROW)
+			error_msg_setter(file_el, "Map ROW exceeded", 22);
+		ft_memcpy(file_el->src->map[file_el->src->y_size - 1], file_el->line, len);
+		free (file_el->line);
+		file_el->line = get_next_line(file_el->fd);
 	}
-	if (!lvl_el->lvl->y_size)
-		get_elements_error(lvl_el, "Map missing", 20);
+	if (!file_el->src->y_size)
+		error_msg_setter(file_el, "Map missing", 20);
 }

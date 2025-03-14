@@ -10,19 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "import.h"
+#include "convert.h"
 
-void	import(int argc, char *argv[], t_cube *lvl)
+void	convert(int argc, char *argv[], t_cube *src)
 {
-	t_import_elements	lvl_el;
+	t_file_elem	file_el;
 
-	lvl->x_size = 0;
-	lvl->y_size = 0;
-	lvl_el.fd = basic_validation(argc, argv);
-	lvl_el.lvl = lvl;
-	lvl_el.line = NULL;
-	get_elements(&lvl_el);
-	get_map(&lvl_el);
-	map_validation(lvl);
-	close(lvl_el.fd);
+	src->x_size = 0;
+	src->y_size = 0;
+	file_el.fd = check_base(argc, argv);
+	file_el.src = src;
+	file_el.line = NULL;
+	get_elements(&file_el);
+	set_map(&file_el);
+	checker_map(src);
+	close(file_el.fd);
 }

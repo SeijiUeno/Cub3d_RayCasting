@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
-#include "../import/cub3d.h"
+#include "../convert/cub3d.h"
 
 void	parse_colors(t_app *app, t_file *cube)
 {

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:40:24 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 19:30:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:22:10 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define COL 80
 # define RAY_INFINITY 1e30
 # define RGB 3
+# define KNIFE_SCALE 7
 
 enum e_elements
 {
@@ -57,6 +58,8 @@ typedef struct s_graphics
 	mlx_texture_t	*tex_so;
 	mlx_texture_t	*tex_ea;
 	mlx_texture_t	*tex_we;
+	mlx_texture_t	*knife[2];
+	int				knife_frame;
 }	t_graphics;
 
 typedef struct s_config
@@ -164,6 +167,12 @@ typedef struct s_vertical_segment
 	uint32_t	color;
 }	t_vertical_segment;
 
+typedef struct s_knife_data
+{
+	mlx_texture_t	*tex;
+	t_point			start;
+}	t_knife_data;
+
 void		draw_full_column(t_app *app, t_column_draw *col_draw,
 				t_tex_info tex);
 void		draw_wall(t_app *app, int x, t_column_draw *cd, t_tex_info tex);
@@ -207,5 +216,8 @@ void		parse_textures(t_app *app, t_file *cube);
 void		parse_colors(t_app *app, t_file *cube);
 void		allocate_map(t_app *app, t_file *cube);
 void		fill_map(t_app *app, t_file *cube);
+
+void		draw_knife(t_app *app);
+uint32_t	convert_texture_color(uint32_t color);
 
 #endif

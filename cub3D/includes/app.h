@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:40:24 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 19:30:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:26:48 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_graphics
 	mlx_texture_t	*tex_so;
 	mlx_texture_t	*tex_ea;
 	mlx_texture_t	*tex_we;
+	mlx_texture_t	*knife[2];
+	int				knife_frame; 
 }	t_graphics;
 
 typedef struct s_config

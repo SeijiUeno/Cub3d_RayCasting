@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ecoelho- <ecoelho-@student.42>             +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:41:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 17:13:45 by ecoelho-         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:12:38 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ static void	init_mlx_and_textures(t_app *app)
 {
 	app->gfx.mlx = mlx_init(WIDTH, HEIGHT, "Raycaster", true);
 	if (!app->gfx.mlx)
-	{
 		exit(EXIT_FAILURE);
-	}
 	app->gfx.tex_no = mlx_load_png(app->config.tex_no_ph);
 	app->gfx.tex_so = mlx_load_png(app->config.tex_so_ph);
 	app->gfx.tex_ea = mlx_load_png(app->config.tex_ea_ph);
 	app->gfx.tex_we = mlx_load_png(app->config.tex_we_ph);
-	if (!app->gfx.tex_no || !app->gfx.tex_so
-		|| !app->gfx.tex_ea || !app->gfx.tex_we)
+	app->gfx.knife[0] = mlx_load_png("assets/textures/kfh.png");
+	app->gfx.knife[1] = mlx_load_png("assets/textures/kfw.png");
+	if (!app->gfx.tex_no || !app->gfx.tex_so || !app->gfx.tex_ea
+		|| !app->gfx.tex_we || !app->gfx.knife[0] || !app->gfx.knife[1])
 	{
 		mlx_terminate(app->gfx.mlx);
 		cleanup_app(app);
@@ -33,12 +33,12 @@ static void	init_mlx_and_textures(t_app *app)
 	app->gfx.img = mlx_new_image(app->gfx.mlx, WIDTH, HEIGHT);
 	if (!app->gfx.img)
 	{
-		mlx_close_window(app->gfx.mlx);
 		mlx_terminate(app->gfx.mlx);
 		cleanup_app(app);
 		msg_error("failed to create mlx image", EXIT_FAILURE);
 	}
 	mlx_image_to_window(app->gfx.mlx, app->gfx.img, 0, 0);
+	app->gfx.knife_frame = 0;
 }
 
 static void	init_app(t_app *app, t_file *cube)

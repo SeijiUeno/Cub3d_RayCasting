@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:05:22 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 15:43:43 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:21:57 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/app.h"
 
-static uint32_t	convert_texture_color(uint32_t color)
+uint32_t	convert_texture_color(uint32_t color)
 {
 	uint32_t	alpha;
 	uint32_t	blue;

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 17:06:03 by ecoelho-          #+#    #+#             */
-/*   Updated: 2025/03/17 10:22:03 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/17 14:09:08 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@ static void	process_player_movement(t_app *app)
 		move_player_right_left(app, -1.0);
 }
 
+static void	process_animation(t_app *app)
+{
+	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_SPACE))
+		app->gfx.knife_frame = 1;
+	else
+		app->gfx.knife_frame = 0;
+}
+
 static void	process_fixing_rotate(t_app *app)
 {
 	if (mlx_is_key_down(app->gfx.mlx, MLX_KEY_LEFT))
@@ -38,4 +46,5 @@ void	process_input(t_app *app)
 {
 	process_player_movement(app);
 	process_fixing_rotate(app);
+	process_animation(app);
 }

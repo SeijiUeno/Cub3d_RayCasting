@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 15:30:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/03/14 15:43:46 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:41:05 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	cleanup_textures(t_app *app)
 {
+	int	i;
+
 	if (app->gfx.tex_so)
 		mlx_delete_texture(app->gfx.tex_so);
 	if (app->gfx.tex_no)
@@ -22,6 +24,13 @@ static void	cleanup_textures(t_app *app)
 		mlx_delete_texture(app->gfx.tex_ea);
 	if (app->gfx.tex_we)
 		mlx_delete_texture(app->gfx.tex_we);
+	i = 0;
+	while (i < 2)
+	{
+		if (app->gfx.knife[i])
+			mlx_delete_texture(app->gfx.knife[i]);
+		i++;
+	}
 }
 
 void	cleanup_app(t_app *app)

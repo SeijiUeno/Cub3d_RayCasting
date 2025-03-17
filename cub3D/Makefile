@@ -46,6 +46,7 @@ SRCS                += $(addprefix $(SRC_DIR)/04_render/, \
                           raycasting.c \
                           render_3d_view.c \
                           render_column.c \
+                          render_knife.c \
                           render_minimap.c)
 SRCS                += $(addprefix $(SRC_DIR)/03_input/, \
                           input_handler.c \

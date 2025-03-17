@@ -15,13 +15,13 @@ BUILD_DIR           = build
 
 SRCS                = $(addprefix $(SRC_DIR)/, \
                           main.c)
-SRCS                += $(addprefix $(SRC_DIR)/convert/, \
+SRCS                += $(addprefix $(SRC_DIR)/01_convert/, \
                           checkers.c \
                           convert.c \
                           file_elements_setter.c \
                           map_checker.c \
                           map_set.c)
-SRCS                += $(addprefix $(SRC_DIR)/file_handler/, \
+SRCS                += $(addprefix $(SRC_DIR)/02_load/, \
                           errors.c \
                           map_allocation.c \
                           map_process.c \
@@ -30,13 +30,13 @@ SRCS                += $(addprefix $(SRC_DIR)/file_handler/, \
                           parse_textures.c \
                           set_player_direction.c \
                           textures.c)
-SRCS                += $(addprefix $(SRC_DIR)/lib/, \
+SRCS                += $(addprefix $(SRC_DIR)/00_aux_funtions/, \
                           aux_2.c \
                           aux.c \
                           error.c \
                           get_next_line.c \
                           utils.c)
-SRCS                += $(addprefix $(SRC_DIR)/render/, \
+SRCS                += $(addprefix $(SRC_DIR)/04_render/, \
                           cleanup.c \
                           draw_minimap_line.c \
                           draw_sections.c \
@@ -47,7 +47,7 @@ SRCS                += $(addprefix $(SRC_DIR)/render/, \
                           render_3d_view.c \
                           render_column.c \
                           render_minimap.c)
-SRCS                += $(addprefix $(SRC_DIR)/player_input/, \
+SRCS                += $(addprefix $(SRC_DIR)/03_input/, \
                           input_handler.c \
                           process_inputs.c)
 
